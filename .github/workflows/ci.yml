@@ -20,7 +20,7 @@ jobs:
       - run: python -m unittest discover -s tests -v
   end-to-end:
     # against a real Jade Agent Base (built from source) and the UI/UX build, in Chromium
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # Playwright's Chromium builds exist for 24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4

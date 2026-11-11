@@ -124,7 +124,8 @@ def _hero(s, ctx):
          title=Param("string", None, "heading"), subtitle=Param("string", None, "line under the heading"),
          items=Param("list", [], '[{"icon", "title", "text"}]', True), columns=Param("int", 3, "columns on wide screens"))
 def _features(s, ctx):
-    items = "".join(f'<div class="card feat">{f"<div class=icon aria-hidden=true>{E(i.get('icon'))}</div>" if i.get("icon") else ""}'
+    icon = lambda i: f'<div class=icon aria-hidden=true>{E(i.get("icon"))}</div>' if i.get("icon") else ""
+    items = "".join(f'<div class="card feat">{icon(i)}'
                     f'<h3>{E(i.get("title"))}</h3><p>{E(i.get("text"))}</p></div>' for i in s.get("items") or [])
     return wrap(s, head(s.get("title"), s.get("subtitle")) + f'<div class="grid" style="--cols:{int(g(s, "columns", 3))}">{items}</div>', "features")
 
@@ -315,7 +316,8 @@ def _faq(s, ctx):
          title=Param("string", None, "heading", True), text=Param("string", None, "a line"), button=Param("object", None, '{"label", "href"}'))
 def _cta(s, ctx):
     b = button(s["button"], ctx) if s.get("button") else ""
-    return wrap(s, f'<h2>{E(s.get("title"))}</h2>{f"<p class=lead>{E(s['text'])}</p>" if s.get("text") else ""}<div class="btns">{b}</div>', "cta")
+    lead = f'<p class=lead>{E(s["text"])}</p>' if s.get("text") else ""
+    return wrap(s, f'<h2>{E(s.get("title"))}</h2>{lead}<div class="btns">{b}</div>', "cta")
 
 
 @section("markdown", "Text written in markdown (or a .md file next to jade.toml).",
@@ -328,7 +330,10 @@ def _md(s, ctx):
 @section("gallery", "A grid of images with captions.", title=Param("string", None, "heading"),
          images=Param("list", [], '[{"src", "alt", "caption"}] or URLs', True), columns=Param("int", 3, "columns"))
 def _gallery(s, ctx):
-    imgs = "".join((lambda i: f'<figure class="card"><img src="{E(i.get("src"))}" alt="{E(i.get("alt", ""))}" loading="lazy">{f"<figcaption>{E(i.get('caption'))}</figcaption>" if i.get("caption") else ""}</figure>')(i if isinstance(i, dict) else {"src": i})
+    def fig(i):
+        cap = f'<figcaption>{E(i.get("caption"))}</figcaption>' if i.get("caption") else ""
+        return f'<figure class="card"><img src="{E(i.get("src"))}" alt="{E(i.get("alt", ""))}" loading="lazy">{cap}</figure>'
+    imgs = "".join(fig(i if isinstance(i, dict) else {"src": i})
                    for i in s.get("images") or [])
     return wrap(s, head(s.get("title")) + f'<div class="grid gallery" style="--cols:{int(g(s, "columns", 3))}">{imgs}</div>', "gallery-sec")
 
