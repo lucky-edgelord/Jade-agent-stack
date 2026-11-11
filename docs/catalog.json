@@ -1,0 +1,1543 @@
+{
+ "schema": "jade.catalog.v1",
+ "version": "0.1.0",
+ "requires": {
+  "base": "0.6.0",
+  "vault": "2.18.3",
+  "kit": "3.1.0",
+  "ui": "1.2.0"
+ },
+ "cdn": {
+  "kit": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-kit@v3.1.0/dist/jade-agent-kit.js",
+  "ui": "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js"
+ },
+ "docs": [
+  {
+   "topic": "start",
+   "title": "Quick start",
+   "summary": "Install, connect, check, then build a site or run a playbook.",
+   "md": "md/start.md",
+   "html": "start.html"
+  },
+  {
+   "topic": "agents",
+   "title": "For agents",
+   "summary": "The shortest paths to a working site or backend, in the fewest tokens.",
+   "md": "md/agents.md",
+   "html": "agents.html"
+  },
+  {
+   "topic": "sites",
+   "title": "Sites",
+   "summary": "The site spec, templates, themes, building, previewing and deploying to Jade Agent Base.",
+   "md": "md/sites.md",
+   "html": "sites.html"
+  },
+  {
+   "topic": "playbooks",
+   "title": "Playbooks",
+   "summary": "Portable YAML automation over Vault, Base, Kit and local commands; check, plan, run, approve.",
+   "md": "md/playbooks.md",
+   "html": "playbooks.html"
+  },
+  {
+   "topic": "harness",
+   "title": "Harness, approvals and credentials",
+   "summary": "How every call is checked before it leaves: approvals, idempotency keys, task credentials, compatibility.",
+   "md": "md/harness.md",
+   "html": "harness.html"
+  },
+  {
+   "topic": "python",
+   "title": "Python API",
+   "summary": "The SDK: Stack, Harness, Site, playbooks, docs, and asyncio wrappers.",
+   "md": "md/python.md",
+   "html": "python.html"
+  },
+  {
+   "topic": "surfaces",
+   "title": "CLI, REPL, MCP and HTTP",
+   "summary": "The same commands on every surface, with the same JSON payloads.",
+   "md": "md/surfaces.md",
+   "html": "surfaces.html"
+  },
+  {
+   "topic": "config",
+   "title": "Configuration and secrets",
+   "summary": "jade.config.yaml keys, discovery, the OS keyring, and the init wizard.",
+   "md": "md/config.md",
+   "html": "config.html"
+  },
+  {
+   "topic": "architecture",
+   "title": "Architecture",
+   "summary": "The five parts, who owns what, and the contract between Vault and Base.",
+   "md": "md/architecture.md",
+   "html": "architecture.html"
+  },
+  {
+   "topic": "security",
+   "title": "Security",
+   "summary": "The threat model across Vault, Base, Kit, UI/UX and the toolkit, and what each defence covers.",
+   "md": "md/security.md",
+   "html": "security.html"
+  },
+  {
+   "topic": "commands",
+   "title": "Commands",
+   "summary": "Every command and its parameters, generated from the code.",
+   "md": "md/commands.md",
+   "html": "commands.html"
+  },
+  {
+   "topic": "errors",
+   "title": "Errors",
+   "summary": "Every error code, its meaning, exit code and remediation.",
+   "md": "md/errors.md",
+   "html": "errors.html"
+  },
+  {
+   "topic": "sections",
+   "title": "Section reference",
+   "summary": "Every page section and its parameters.",
+   "md": "md/sections.md",
+   "html": "sections.html"
+  },
+  {
+   "topic": "themes",
+   "title": "Themes",
+   "summary": "The themes for sites and pages.",
+   "md": "md/themes.md",
+   "html": "themes.html"
+  },
+  {
+   "topic": "playbook-schema",
+   "title": "Playbook schema",
+   "summary": "The JSON Schema of playbooks.",
+   "md": "md/playbook-schema.md",
+   "html": "playbook-schema.html"
+  },
+  {
+   "topic": "versions",
+   "title": "Stack versions",
+   "summary": "Which versions of the four repositories this toolkit works with.",
+   "md": "md/versions.md",
+   "html": "versions.html"
+  }
+ ],
+ "commands": [
+  {
+   "name": "version",
+   "help": "The toolkit version and the versions it works with.",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "doctor",
+   "help": "Check the config, secrets and every target: reachable, authenticated, compatible, no URL tokens.",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "config.show",
+   "help": "The configuration (it never holds secrets).",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "config.get",
+   "help": "One configuration value by dotted key, e.g. targets.base.url.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "key",
+     "type": "str",
+     "help": "",
+     "required": true
+    }
+   ]
+  },
+  {
+   "name": "config.set",
+   "help": "Set a configuration value: KEY=VALUE (VALUE may be JSON).",
+   "mutates": true,
+   "params": [
+    {
+     "name": "assignment",
+     "type": "str",
+     "help": "key=value",
+     "required": true
+    }
+   ]
+  },
+  {
+   "name": "config.edit",
+   "help": "Open jade.config.yaml in $EDITOR, then check it.",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "secret.set",
+   "help": "Store a secret in the OS keyring. The value comes from --value, $JADE_SECRET_VALUE, or a hidden prompt.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "value",
+     "type": "str",
+     "help": "avoid: shells keep history"
+    }
+   ]
+  },
+  {
+   "name": "secret.list",
+   "help": "The names of stored secrets (never their values).",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "secret.rm",
+   "help": "Delete a stored secret.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    }
+   ]
+  },
+  {
+   "name": "vault.status",
+   "help": "Vault's status (header auth; refuses a Vault that accepts URL tokens).",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "vault.chat",
+   "help": "Send a message to Vault's agent and wait for the answer.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "message",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "session",
+     "type": "str",
+     "help": "a chat id, or new"
+    },
+    {
+     "name": "timeout",
+     "type": "float",
+     "help": ""
+    }
+   ]
+  },
+  {
+   "name": "vault.flows",
+   "help": "Vault's flows.",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "vault.flow.run",
+   "help": "Run a Vault flow by name.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "input",
+     "type": "json",
+     "help": "JSON, -, or @file"
+    },
+    {
+     "name": "timeout",
+     "type": "float",
+     "help": ""
+    }
+   ]
+  },
+  {
+   "name": "base.tools",
+   "help": "The tools this Base token may use.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "format",
+     "type": "str",
+     "help": "the shape: openai, anthropic or mcp (default: with scope and destructive)",
+     "choices": [
+      "openai",
+      "anthropic",
+      "mcp"
+     ]
+    },
+    {
+     "name": "names",
+     "type": "bool",
+     "help": "names only"
+    }
+   ]
+  },
+  {
+   "name": "base.call",
+   "help": "Call a Base tool (approvals apply; mutations get an idempotency key).",
+   "mutates": true,
+   "params": [
+    {
+     "name": "tool",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "args",
+     "type": "json",
+     "help": "JSON, -, or @file"
+    },
+    {
+     "name": "idempotency_key",
+     "type": "str",
+     "help": "default: a new UUIDv7"
+    },
+    {
+     "name": "timeout",
+     "type": "float",
+     "help": ""
+    }
+   ],
+   "example": "jade base call records_list --args '{\"collection\":\"posts\"}'"
+  },
+  {
+   "name": "base.audit",
+   "help": "The audit log: what agents did (and what was refused).",
+   "mutates": false,
+   "params": [
+    {
+     "name": "limit",
+     "type": "int",
+     "help": "how many entries",
+     "default": 50
+    },
+    {
+     "name": "tool",
+     "type": "str",
+     "help": ""
+    }
+   ]
+  },
+  {
+   "name": "base.credential",
+   "help": "Mint a short-lived task credential (prints only its id, scopes and expiry).",
+   "mutates": true,
+   "params": [
+    {
+     "name": "task_id",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "scopes",
+     "type": "list",
+     "help": "the fewest scopes the task needs, comma-separated",
+     "default": [
+      "read"
+     ]
+    },
+    {
+     "name": "ttl",
+     "type": "str",
+     "help": "how long it lasts: 15m, 2h (at most 24h)",
+     "default": "15m"
+    }
+   ]
+  },
+  {
+   "name": "kit.page",
+   "help": "Write a page that runs Jade Agent Kit in the browser.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "out",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "features",
+     "type": "list",
+     "help": "Kit features to load, comma-separated (agent, sqlite, bm25, \u2026)",
+     "default": [
+      "agent"
+     ]
+    },
+    {
+     "name": "ollama",
+     "type": "str",
+     "help": "Ollama host"
+    },
+    {
+     "name": "model",
+     "type": "str",
+     "help": ""
+    },
+    {
+     "name": "title",
+     "type": "str",
+     "help": "",
+     "default": "Jade agent"
+    }
+   ]
+  },
+  {
+   "name": "ui.chat",
+   "help": "Write a page with a chat: full-screen, inline or a floating widget.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "out",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "mount",
+     "type": "str",
+     "help": "full-screen, inline, or widget (a floating button)",
+     "default": "full-screen",
+     "choices": [
+      "full-screen",
+      "widget",
+      "inline"
+     ]
+    },
+    {
+     "name": "preset",
+     "type": "str",
+     "help": "a theme",
+     "default": "jade"
+    },
+    {
+     "name": "mode",
+     "type": "str",
+     "help": "light, dark, or auto (follows the system)",
+     "default": "auto",
+     "choices": [
+      "auto",
+      "light",
+      "dark"
+     ]
+    },
+    {
+     "name": "base",
+     "type": "str",
+     "help": "a Jade Agent Base URL"
+    },
+    {
+     "name": "title",
+     "type": "str",
+     "help": "",
+     "default": "Chat"
+    }
+   ]
+  },
+  {
+   "name": "playbook.list",
+   "help": "Playbooks here (./, ./playbooks, ./examples) and whether each is approved.",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "playbook.check",
+   "help": "Validate a playbook: schema, expressions, targets, and tools and arguments against the live targets.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "offline",
+     "type": "bool",
+     "help": "do not contact targets"
+    }
+   ]
+  },
+  {
+   "name": "playbook.plan",
+   "help": "Every call a playbook would make, with arguments and idempotency keys. Makes no calls.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "var",
+     "type": "list",
+     "help": "k=v, repeatable"
+    }
+   ]
+  },
+  {
+   "name": "playbook.run",
+   "help": "Run a playbook (resumes an interrupted run with the same vars). Unattended runs need it approved.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "var",
+     "type": "list",
+     "help": "k=v, repeatable"
+    },
+    {
+     "name": "fresh",
+     "type": "bool",
+     "help": "start over instead of resuming"
+    }
+   ]
+  },
+  {
+   "name": "playbook.approve",
+   "help": "Approve a playbook as it is now (its hash is signed; any edit needs a new approval).",
+   "mutates": true,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    }
+   ]
+  },
+  {
+   "name": "playbook.revoke",
+   "help": "Withdraw a playbook's approval.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    }
+   ]
+  },
+  {
+   "name": "playbook.logs",
+   "help": "Runs of a playbook (or all) and the state of each task.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": ""
+    }
+   ]
+  },
+  {
+   "name": "site.templates",
+   "help": "Site templates (a spec can be just name, tagline and template).",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "site.themes",
+   "help": "Themes for sites and pages.",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "site.sections",
+   "help": "The section library: one line each, or one section's parameters in full.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": ""
+    }
+   ]
+  },
+  {
+   "name": "site.new",
+   "help": "Write a jade.site.yaml from a template.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "template",
+     "type": "str",
+     "help": "a template (jade site templates)",
+     "default": "landing"
+    },
+    {
+     "name": "tagline",
+     "type": "str",
+     "help": "one line under the name"
+    },
+    {
+     "name": "theme",
+     "type": "str",
+     "help": "a theme (jade site themes)"
+    },
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "the folder for jade.site.yaml",
+     "default": "."
+    },
+    {
+     "name": "url",
+     "type": "str",
+     "help": "the public address of the site"
+    }
+   ]
+  },
+  {
+   "name": "site.check",
+   "help": "Check a site spec (and that it compiles).",
+   "mutates": false,
+   "params": [
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "",
+     "default": "."
+    }
+   ]
+  },
+  {
+   "name": "site.build",
+   "help": "Compile the site to static files.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "",
+     "default": "."
+    },
+    {
+     "name": "out",
+     "type": "str",
+     "help": "the output folder",
+     "default": "dist"
+    },
+    {
+     "name": "ui",
+     "type": "str",
+     "help": "UI/UX module URL"
+    },
+    {
+     "name": "kit",
+     "type": "str",
+     "help": "Kit module URL"
+    }
+   ]
+  },
+  {
+   "name": "site.plan",
+   "help": "Every Base call a deploy would make (secrets shown as placeholders). Makes no calls.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "",
+     "default": "."
+    }
+   ]
+  },
+  {
+   "name": "site.deploy",
+   "help": "Deploy the site to the Base target: settings, modules, collections, models, plans, billing, files.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "",
+     "default": "."
+    },
+    {
+     "name": "yes",
+     "type": "bool",
+     "help": "approve this deploy (needed when nobody can be asked)"
+    }
+   ]
+  },
+  {
+   "name": "site.preview",
+   "help": "Build and serve the site on localhost (UI/UX from the CDN unless --ui).",
+   "mutates": false,
+   "params": [
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "",
+     "default": "."
+    },
+    {
+     "name": "port",
+     "type": "int",
+     "help": "the local port",
+     "default": 8080
+    },
+    {
+     "name": "ui",
+     "type": "str",
+     "help": "a UI/UX module URL (to preview a local build)"
+    }
+   ]
+  },
+  {
+   "name": "agent.ask",
+   "help": "Ask an agent: on Vault (its agent), or on Base (a model from config.models using Base's tools, through approvals).",
+   "mutates": true,
+   "params": [
+    {
+     "name": "message",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "target",
+     "type": "str",
+     "help": "vault (its agent) or base (a model here with Base tools)",
+     "default": "vault",
+     "choices": [
+      "vault",
+      "base"
+     ]
+    },
+    {
+     "name": "name",
+     "type": "str",
+     "help": "the agent session name",
+     "default": "jade"
+    },
+    {
+     "name": "steps",
+     "type": "int",
+     "help": "at most this many tool rounds",
+     "default": 8
+    }
+   ]
+  },
+  {
+   "name": "docs.topics",
+   "help": "Documentation topics.",
+   "mutates": false,
+   "params": []
+  },
+  {
+   "name": "docs.show",
+   "help": "A docs topic, or one section: topic#heading.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "ref",
+     "type": "str",
+     "help": "",
+     "required": true
+    }
+   ]
+  },
+  {
+   "name": "docs.search",
+   "help": "Search the docs; each hit has a ref for docs.show.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "query",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "limit",
+     "type": "int",
+     "help": "how many results",
+     "default": 8
+    }
+   ]
+  },
+  {
+   "name": "docs.build",
+   "help": "Build the docs: HTML for people, Markdown + llms.txt + catalog.json for agents.",
+   "mutates": false,
+   "params": [
+    {
+     "name": "out",
+     "type": "str",
+     "help": "",
+     "default": "docs"
+    },
+    {
+     "name": "format",
+     "type": "str",
+     "help": "html, md or both",
+     "default": "both",
+     "choices": [
+      "html",
+      "md",
+      "both"
+     ]
+    },
+    {
+     "name": "check",
+     "type": "bool",
+     "help": "fail if the committed output is stale"
+    }
+   ]
+  },
+  {
+   "name": "commands",
+   "help": "Every command with its parameters (for agents).",
+   "mutates": false,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": ""
+    }
+   ]
+  },
+  {
+   "name": "site.template.save",
+   "help": "Keep this site's design as a template (theme, pages, sections, backend) to reuse: new sites become name + tagline + template.",
+   "mutates": true,
+   "params": [
+    {
+     "name": "name",
+     "type": "str",
+     "help": "",
+     "required": true
+    },
+    {
+     "name": "dir",
+     "type": "str",
+     "help": "the site folder",
+     "default": "."
+    },
+    {
+     "name": "about",
+     "type": "str",
+     "help": "one line describing it"
+    },
+    {
+     "name": "project",
+     "type": "bool",
+     "help": "save in ./templates (shared with the project) instead of your own templates"
+    }
+   ],
+   "example": "jade site template save house --about 'Our look: ocean theme, pricing, account'"
+  }
+ ],
+ "errors": [
+  {
+   "code": "JADE100",
+   "meaning": "not configured",
+   "remediation": "Run `jade init`, or set JADE_CONFIG to a jade.config.yaml."
+  },
+  {
+   "code": "JADE101",
+   "meaning": "bad token",
+   "remediation": "The server refused the token. Make a new one and store it: `jade secret set <name>`."
+  },
+  {
+   "code": "JADE102",
+   "meaning": "legacy query-string authentication refused",
+   "remediation": "This Vault accepts ?token= in URLs. Update Jade Vault to 2.18.3 or later. Only for diagnosis: --accept-legacy."
+  },
+  {
+   "code": "JADE103",
+   "meaning": "credential refused",
+   "remediation": "Base refused the task credential (revoked or expired). The task stops; it is not retried. Start the task again."
+  },
+  {
+   "code": "JADE104",
+   "meaning": "secret store unavailable",
+   "remediation": "Install keyring (`pip install keyring`), or allow a 0600 file with --accept-file-secrets."
+  },
+  {
+   "code": "JADE105",
+   "meaning": "missing secret",
+   "remediation": "Store it with `jade secret set <name>`, or set the environment variable JADE_SECRET_<NAME>."
+  },
+  {
+   "code": "JADE200",
+   "meaning": "cannot reach the target",
+   "remediation": "Check the URL in jade.config.yaml and that the server is running (`jade doctor`)."
+  },
+  {
+   "code": "JADE201",
+   "meaning": "MCP protocol mismatch",
+   "remediation": "The server speaks another MCP protocol version. Update the server or the toolkit."
+  },
+  {
+   "code": "JADE202",
+   "meaning": "remote error",
+   "remediation": "The target answered with an error; the message says which."
+  },
+  {
+   "code": "JADE203",
+   "meaning": "incompatible version",
+   "remediation": "The target's version is outside what STACK.md allows. Upgrade the target or the toolkit (`jade doctor`)."
+  },
+  {
+   "code": "JADE204",
+   "meaning": "timed out",
+   "remediation": "The call took longer than its timeout. Pass timeout= / --timeout, or check the target."
+  },
+  {
+   "code": "JADE205",
+   "meaning": "idempotency conflict",
+   "remediation": "The same idempotency key was used with other arguments. Use a new key for a new call."
+  },
+  {
+   "code": "JADE300",
+   "meaning": "approval required",
+   "remediation": "Allow it in jade.config.yaml under approvals, or confirm interactively."
+  },
+  {
+   "code": "JADE301",
+   "meaning": "denied by approvals",
+   "remediation": "A deny rule in jade.config.yaml matches. Deny wins; change the rule to allow it."
+  },
+  {
+   "code": "JADE302",
+   "meaning": "unsafe without confirmation",
+   "remediation": "Destructive or unknown operations need a person to confirm, or --yolo (logged)."
+  },
+  {
+   "code": "JADE303",
+   "meaning": "playbook not approved",
+   "remediation": "Review it, then `jade playbook approve <name>`. Any edit needs a new approval."
+  },
+  {
+   "code": "JADE400",
+   "meaning": "invalid configuration",
+   "remediation": "Fix jade.config.yaml at the place the message names (`jade config show`)."
+  },
+  {
+   "code": "JADE401",
+   "meaning": "invalid playbook",
+   "remediation": "Fix the playbook at the place the message names (`jade playbook check <name>`)."
+  },
+  {
+   "code": "JADE402",
+   "meaning": "invalid site spec",
+   "remediation": "Fix the site spec at the place the message names (`jade site check`)."
+  },
+  {
+   "code": "JADE403",
+   "meaning": "unknown tool",
+   "remediation": "The target has no such tool. List them: `jade base tools`."
+  },
+  {
+   "code": "JADE404",
+   "meaning": "ambiguous tool",
+   "remediation": "More than one target has this tool. Name the target."
+  },
+  {
+   "code": "JADE405",
+   "meaning": "not found",
+   "remediation": "Check the name; list what exists with the matching `list` command."
+  },
+  {
+   "code": "JADE406",
+   "meaning": "generated files are stale",
+   "remediation": "Run `python build/build.py` and commit the result."
+  },
+  {
+   "code": "JADE500",
+   "meaning": "doctor failed",
+   "remediation": "Run `jade doctor` and fix what it reports, or pass --force to go on anyway."
+  }
+ ],
+ "sections": {
+  "nav": {
+   "doc": "The top bar: the site's name, links to its pages, a theme switch and, with a backend, Sign in.",
+   "params": {
+    "brand": {
+     "type": "string",
+     "default": null,
+     "doc": "name shown (default: the site name)",
+     "required": false
+    },
+    "links": {
+     "type": "list",
+     "default": null,
+     "doc": "links [{\"label\", \"href\"}] (default: every page with nav = true)",
+     "required": false
+    },
+    "cta": {
+     "type": "object",
+     "default": null,
+     "doc": "a button {\"label\", \"href\"}",
+     "required": false
+    },
+    "theme_toggle": {
+     "type": "bool",
+     "default": true,
+     "doc": "show the light/dark switch",
+     "required": false
+    }
+   }
+  },
+  "hero": {
+   "doc": "The opening: a big title, a line under it, buttons and an optional image.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "headline (default: the site name)",
+     "required": false
+    },
+    "subtitle": {
+     "type": "string",
+     "default": null,
+     "doc": "one or two sentences (default: the site tagline)",
+     "required": false
+    },
+    "eyebrow": {
+     "type": "string",
+     "default": null,
+     "doc": "small text above the title",
+     "required": false
+    },
+    "buttons": {
+     "type": "list",
+     "default": null,
+     "doc": "[{\"label\", \"href\"}] (first is primary)",
+     "required": false
+    },
+    "image": {
+     "type": "string",
+     "default": null,
+     "doc": "an image URL or path",
+     "required": false
+    },
+    "align": {
+     "type": "string",
+     "default": "center",
+     "doc": "center | left",
+     "required": false
+    }
+   }
+  },
+  "features": {
+   "doc": "A grid of features: an icon (emoji or short text), a title and a sentence each.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading",
+     "required": false
+    },
+    "subtitle": {
+     "type": "string",
+     "default": null,
+     "doc": "line under the heading",
+     "required": false
+    },
+    "items": {
+     "type": "list",
+     "default": [],
+     "doc": "[{\"icon\", \"title\", \"text\"}]",
+     "required": true
+    },
+    "columns": {
+     "type": "int",
+     "default": 3,
+     "doc": "columns on wide screens",
+     "required": false
+    }
+   }
+  },
+  "steps": {
+   "doc": "Numbered steps (how it works).",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": "How it works",
+     "doc": "heading",
+     "required": false
+    },
+    "items": {
+     "type": "list",
+     "default": [],
+     "doc": "[{\"title\", \"text\"}]",
+     "required": true
+    }
+   }
+  },
+  "stats": {
+   "doc": "Big numbers with labels.",
+   "params": {
+    "items": {
+     "type": "list",
+     "default": [],
+     "doc": "[{\"value\", \"label\"}]",
+     "required": true
+    },
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading",
+     "required": false
+    }
+   }
+  },
+  "pricing": {
+   "doc": "Plans. With a backend: the live plans and Subscribe buttons (Stripe Checkout). Without: the plans you list.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": "Pricing",
+     "doc": "heading",
+     "required": false
+    },
+    "subtitle": {
+     "type": "string",
+     "default": null,
+     "doc": "line under it",
+     "required": false
+    },
+    "currency": {
+     "type": "string",
+     "default": "USD",
+     "doc": "currency code",
+     "required": false
+    },
+    "plans": {
+     "type": "list",
+     "default": null,
+     "doc": "for a static site: [{\"name\", \"price\", \"features\": [...], \"button\": {\"label\",\"href\"}}] (default: backend.plans)",
+     "required": false
+    }
+   }
+  },
+  "auth": {
+   "doc": "Sign in, create an account, reset a password (needs a backend). After signing in, go to `next`.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading above it",
+     "required": false
+    },
+    "next": {
+     "type": "string",
+     "default": null,
+     "doc": "where to go after signing in, e.g. /account",
+     "required": false
+    }
+   }
+  },
+  "account": {
+   "doc": "The signed-in user's plan, usage, billing and API keys; signed out, a sign-in form (needs a backend).",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": "Your account",
+     "doc": "heading",
+     "required": false
+    },
+    "currency": {
+     "type": "string",
+     "default": "USD",
+     "doc": "currency code",
+     "required": false
+    }
+   }
+  },
+  "chat": {
+   "doc": "An AI chat. mode gateway: the backend's models for signed-in users. mode ollama: the visitor pastes an Ollama Cloud key. mode demo: a scripted demo.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading",
+     "required": false
+    },
+    "mode": {
+     "type": "string",
+     "default": "gateway",
+     "doc": "gateway | ollama | demo",
+     "required": false
+    },
+    "model": {
+     "type": "string",
+     "default": null,
+     "doc": "model name (gateway: one of backend.models)",
+     "required": false
+    },
+    "system": {
+     "type": "string",
+     "default": null,
+     "doc": "system prompt",
+     "required": false
+    },
+    "greeting": {
+     "type": "string",
+     "default": "How can I help?",
+     "doc": "empty-state heading",
+     "required": false
+    },
+    "suggestions": {
+     "type": "list",
+     "default": [],
+     "doc": "starter prompts",
+     "required": false
+    },
+    "height": {
+     "type": "string",
+     "default": "70vh",
+     "doc": "CSS height",
+     "required": false
+    },
+    "tools": {
+     "type": "bool",
+     "default": false,
+     "doc": "give the model the kit's workspace tools (files, shell)",
+     "required": false
+    },
+    "replies": {
+     "type": "object",
+     "default": null,
+     "doc": "demo mode: {\"keyword\": \"reply\"}; \"*\" for anything else",
+     "required": false
+    }
+   }
+  },
+  "form": {
+   "doc": "A form that saves to a backend collection (waitlists, contact forms, signups). The collection must let anyone create.",
+   "params": {
+    "collection": {
+     "type": "string",
+     "default": null,
+     "doc": "collection name",
+     "required": true
+    },
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading",
+     "required": false
+    },
+    "text": {
+     "type": "string",
+     "default": null,
+     "doc": "a line under it",
+     "required": false
+    },
+    "fields": {
+     "type": "list",
+     "default": [],
+     "doc": "field specs \"name:type!\" (type: text, email, number, url, textarea, checkbox; ! = required) or {\"name\",\"label\",\"type\",\"required\"}",
+     "required": true
+    },
+    "submit": {
+     "type": "string",
+     "default": "Send",
+     "doc": "button label",
+     "required": false
+    },
+    "success": {
+     "type": "string",
+     "default": "Thank you! We got it.",
+     "doc": "shown after sending",
+     "required": false
+    }
+   }
+  },
+  "records": {
+   "doc": "Cards listing records of a public backend collection (products, posts, team, \u2026).",
+   "params": {
+    "collection": {
+     "type": "string",
+     "default": null,
+     "doc": "collection name (its list rule must allow the visitor)",
+     "required": true
+    },
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading",
+     "required": false
+    },
+    "title_field": {
+     "type": "string",
+     "default": "title",
+     "doc": "field shown as the card title",
+     "required": false
+    },
+    "text_field": {
+     "type": "string",
+     "default": null,
+     "doc": "field shown as text",
+     "required": false
+    },
+    "image_field": {
+     "type": "string",
+     "default": null,
+     "doc": "file field shown as the image",
+     "required": false
+    },
+    "price_field": {
+     "type": "string",
+     "default": null,
+     "doc": "field shown as a price",
+     "required": false
+    },
+    "filter": {
+     "type": "string",
+     "default": null,
+     "doc": "PocketBase filter",
+     "required": false
+    },
+    "sort": {
+     "type": "string",
+     "default": null,
+     "doc": "sort, e.g. title or -price (-created needs a created field)",
+     "required": false
+    },
+    "limit": {
+     "type": "int",
+     "default": 12,
+     "doc": "how many",
+     "required": false
+    },
+    "empty": {
+     "type": "string",
+     "default": "Nothing here yet.",
+     "doc": "shown when there are none",
+     "required": false
+    }
+   }
+  },
+  "faq": {
+   "doc": "Questions and answers that open and close.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": "Questions",
+     "doc": "heading",
+     "required": false
+    },
+    "items": {
+     "type": "list",
+     "default": [],
+     "doc": "[{\"q\", \"a\"}] (answers may use markdown)",
+     "required": true
+    }
+   }
+  },
+  "cta": {
+   "doc": "A call to action: a heading, a line and a button, on a coloured band.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading",
+     "required": true
+    },
+    "text": {
+     "type": "string",
+     "default": null,
+     "doc": "a line",
+     "required": false
+    },
+    "button": {
+     "type": "object",
+     "default": null,
+     "doc": "{\"label\", \"href\"}",
+     "required": false
+    }
+   }
+  },
+  "markdown": {
+   "doc": "Text written in markdown (or a .md file next to jade.toml).",
+   "params": {
+    "text": {
+     "type": "string",
+     "default": null,
+     "doc": "markdown",
+     "required": false
+    },
+    "file": {
+     "type": "string",
+     "default": null,
+     "doc": "a markdown file, relative to jade.toml",
+     "required": false
+    },
+    "narrow": {
+     "type": "bool",
+     "default": true,
+     "doc": "a reading width",
+     "required": false
+    }
+   }
+  },
+  "gallery": {
+   "doc": "A grid of images with captions.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading",
+     "required": false
+    },
+    "images": {
+     "type": "list",
+     "default": [],
+     "doc": "[{\"src\", \"alt\", \"caption\"}] or URLs",
+     "required": true
+    },
+    "columns": {
+     "type": "int",
+     "default": 3,
+     "doc": "columns",
+     "required": false
+    }
+   }
+  },
+  "code": {
+   "doc": "A code block with copy and highlighting.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading",
+     "required": false
+    },
+    "lang": {
+     "type": "string",
+     "default": "",
+     "doc": "language",
+     "required": false
+    },
+    "code": {
+     "type": "string",
+     "default": "",
+     "doc": "the code",
+     "required": true
+    }
+   }
+  },
+  "surface": {
+   "doc": "UI from a Jade surface spec (components, data, actions), e.g. a calculator, a dashboard or a quiz.",
+   "params": {
+    "title": {
+     "type": "string",
+     "default": null,
+     "doc": "heading",
+     "required": false
+    },
+    "spec": {
+     "type": "object",
+     "default": {},
+     "doc": "a surface spec: {root, components, data} (see the UI/UX catalog)",
+     "required": false
+    },
+    "file": {
+     "type": "string",
+     "default": null,
+     "doc": "a saved surface spec (YAML or JSON), relative to jade.site.yaml: reuse a design instead of rebuilding it",
+     "required": false
+    },
+    "name": {
+     "type": "string",
+     "default": null,
+     "doc": "surface name (for agents and actions)",
+     "required": false
+    }
+   }
+  },
+  "html": {
+   "doc": "Your own HTML, as it is (an escape hatch).",
+   "params": {
+    "html": {
+     "type": "string",
+     "default": "",
+     "doc": "HTML",
+     "required": true
+    }
+   }
+  },
+  "footer": {
+   "doc": "The bottom of the page: a line of text and links.",
+   "params": {
+    "text": {
+     "type": "string",
+     "default": null,
+     "doc": "text (default: \u00a9 the site name)",
+     "required": false
+    },
+    "links": {
+     "type": "list",
+     "default": [],
+     "doc": "[{\"label\", \"href\"}]",
+     "required": false
+    }
+   }
+  }
+ },
+ "templates": {
+  "chatbot": "A chatbot site, with a full-page chat for signed-in users and a floating help widget on every page.",
+  "dashboard": "An analytics dashboard built from a surface spec (KPIs, charts, a sortable table), with sign-in.",
+  "docs": "A documentation site from Markdown files (no backend needed).",
+  "landing": "A one-page product landing site (no backend needed).",
+  "portfolio": "A personal portfolio with work, a gallery and a contact form.",
+  "saas": "An AI API business, with pricing, sign-up, an account page with keys and usage, a chat playground and docs.",
+  "shop": "A small shop: products listed from the backend, accounts, and a support chat widget.",
+  "waitlist": "A launch page with a waitlist form saved to the backend (anyone can join; only admins can read it)."
+ },
+ "themes": [
+  "jade",
+  "midnight",
+  "paper",
+  "contrast",
+  "sunset",
+  "ocean",
+  "forest",
+  "rose",
+  "mono",
+  "neon",
+  "slate",
+  "terminal"
+ ]
+}

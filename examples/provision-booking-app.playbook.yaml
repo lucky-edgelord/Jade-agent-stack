@@ -1,0 +1,49 @@
+apiVersion: jade/v1
+kind: Playbook
+metadata:
+  name: provision-booking-app
+  description: Create a booking backend, then tell Vault to show its form.
+  tags: [demo, base, vault]
+spec:
+  targets: [base, vault, local]
+  timeout: 120s
+  scopes: [read, write, schema]
+  vars:
+    app_name: bookings
+  defaults:
+    fail_mode: stop
+    idempotent_strategy: key
+  tasks:
+    - name: Ensure the collection
+      target: base
+      tool: collection_create
+      args:
+        name: "{{ app_name }}"
+        fields:
+          - {name: title, type: text, required: true}
+          - {name: when, type: date}
+        createRule: ""
+      register: created
+      retries: 2
+      until: "{{ created.ok }}"
+
+    - name: Show the form in Vault
+      target: vault
+      tool: flow
+      args:
+        name: Booking form
+        input: {collection: "{{ app_name }}"}
+      when: "{{ created.changed }}"
+
+    - block:
+        - name: Announce
+          target: vault
+          tool: chat
+          args:
+            message: "{{ app_name }} is live. Tell me when the first booking arrives."
+      rescue:
+        - name: Log the failure
+          command: "echo failed >> /tmp/jade-playbook.log"
+      always:
+        - name: Record the run
+          command: "date -u +%FT%TZ >> /tmp/jade-playbook.log"

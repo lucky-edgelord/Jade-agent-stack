@@ -1,0 +1,18 @@
+apiVersion: jade/v1
+kind: Playbook
+metadata:
+  name: kit-page
+  description: Write a page that runs Jade Agent Kit in the browser with Ollama Cloud (Kit only).
+  tags: [kit]
+spec:
+  targets: [kit]
+  vars:
+    out: agent.html
+  tasks:
+    - name: The page
+      tool: page
+      args:
+        features: [agent, sqlite, bm25]
+        model: gpt-oss:120b
+        title: My agent
+        out: "{{ out }}"

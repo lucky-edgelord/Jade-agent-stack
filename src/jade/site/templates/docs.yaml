@@ -1,0 +1,12 @@
+about: A documentation site from Markdown files (no backend needed).
+theme: paper
+pages:
+  - path: /
+    title: Introduction
+    sections: [nav, {type: markdown, text: "# Introduction\n\nWelcome. Edit this page, or point a markdown section at a file: `file: docs/intro.md`."}, footer]
+  - path: /guide
+    title: Guide
+    sections: [nav, {type: markdown, text: "# Guide\n\n1. Install\n2. Configure\n3. Run\n\n```sh\nnpm install my-tool\n```"}, footer]
+  - path: /reference
+    title: Reference
+    sections: [nav, {type: markdown, text: "# Reference\n\n| Option | Default |\n| --- | --- |\n| `port` | `8080` |"}, footer]

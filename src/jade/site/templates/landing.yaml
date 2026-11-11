@@ -1,0 +1,13 @@
+about: A one-page product landing site (no backend needed).
+theme: sunset
+pages:
+  - path: /
+    title: Home
+    sections:
+      - nav
+      - {type: hero, eyebrow: "Coming soon", buttons: [{label: Learn more, href: "#features"}]}
+      - {type: features, id: features, items: [{icon: "✨", title: Simple, text: "Set up in a minute."}, {icon: "🚀", title: Fast, text: "Built for speed."}, {icon: "🤝", title: Friendly, text: "Real people answer."}]}
+      - {type: stats, items: [{value: "99.9%", label: uptime}, {value: "<50ms", label: response}, {value: "24/7", label: support}]}
+      - {type: faq, items: [{q: "Is it free?", a: "There is a free plan."}, {q: "Can I cancel?", a: "Any time."}]}
+      - {type: cta, title: Ready when you are, button: {label: Get started, href: "#"}}
+      - footer

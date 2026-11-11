@@ -1,0 +1,24 @@
+about: A chatbot site, with a full-page chat for signed-in users and a floating help widget on every page.
+theme: midnight
+backend:
+  modules: [gateway]
+  providers:
+    - {name: ollama-cloud, type: ollama-cloud, api_key_env: OLLAMA_API_KEY}
+  models:
+    - {name: assistant, provider: ollama-cloud, upstream: gpt-oss:120b, kind: chat}
+  plans:
+    - {name: free, price_month: 0, monthly_tokens: 100000, rpm: 10, default: true}
+pages:
+  - path: /
+    title: Home
+    sections:
+      - nav
+      - {type: hero, buttons: [{label: Start chatting, href: /chat}]}
+      - {type: features, items: [{icon: "💬", title: Ask anything, text: "Answers in plain language."}, {icon: "🔒", title: Private, text: "Your chats stay in your account."}, {icon: "📱", title: Anywhere, text: "Works on phone and desktop."}]}
+      - footer
+  - path: /chat
+    title: Chat
+    sections: [nav, {type: chat, height: 75vh, suggestions: ["What can you do?", "Help me plan my week"]}, footer]
+  - path: /account
+    title: Sign in
+    sections: [nav, {type: auth, next: /chat}, footer]

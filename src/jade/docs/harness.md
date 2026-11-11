@@ -1,0 +1,60 @@
+---
+title: "Harness, approvals and credentials"
+summary: "How every call is checked before it leaves: approvals, idempotency keys, task credentials, compatibility."
+tags: [harness, approvals, idempotency, credentials, safety]
+applies_to: stack
+audience: both
+since: 0.1.0
+order: 30
+---
+# Harness, approvals and credentials
+
+Every SDK call and command goes through the harness, in the same process (no daemon).
+
+## Approvals
+
+`approvals` in `jade.config.yaml` lists what is allowed, by capability and target pattern. Deny wins. A bare
+`true` is rejected.
+
+```yaml
+approvals:
+  base.read: ["*"]
+  base.write: ["record_*:bookings"]           # <tool>:<collection or name>
+  base.schema: {allow: ["collection_create:*"], deny: ["collection_delete:*"]}
+  vault.chat: ["*"]
+  vault.flow: ["Daily digest"]
+  shell: {allow: [ls, cat, grep], deny: [rm, curl, wget]}
+  http_request: {allow_hosts: [api.example.com], deny_hosts: ["*"]}
+```
+
+| Capability | Target string |
+| --- | --- |
+| `base.<scope>` (read, write, schema, hooks, site, settings, gateway, billing) | `<tool>` or `<tool>:<collection/name/path>` |
+| `vault.chat`, `vault.flow`, `vault.status`, … | the session or flow name |
+| `kit.page` | the output file |
+| `shell` | the command's first word |
+
+A call that no rule covers needs a person to confirm, or `--yolo`. Destructive Base tools (`collection_delete`, …)
+need confirmation even when allowed, unless their rule says `confirm: false`. Every confirmation, refusal and `--yolo`
+is appended to `~/.local/state/jade/approvals.log` with what, when, target, task and scope.
+
+## Idempotency keys
+
+Mutations always carry a key: given (`idempotency_key=`), from `with harness.with_idempotency(key)`, or a new UUIDv7.
+Reads retry on network errors; mutations never retry by themselves.
+
+## Task credentials
+
+`with harness.task("job-42", scopes=["read", "write"]):` mints a Base credential (15 minutes by default,
+`targets.base.credentials.ttl`) and uses it for the calls inside, then revokes it. Playbooks with `spec.scopes` do
+this for the whole run. A 403 `credential_refused` (JADE103) stops the run: it is not retried.
+
+## Compatibility
+
+`jade doctor` compares each target's version with STACK.md: another major version is refused (JADE203), an older minor
+is a warning. A Vault that accepts `?token=` is refused (JADE102) unless `--accept-legacy`.
+
+## Routing
+
+`harness.call(None, "records_list", …)` goes to the one configured target that has the tool. Two owners: name the
+target, or set `playbooks.routes.<tool>: base` in the config.

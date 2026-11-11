@@ -1,0 +1,22 @@
+apiVersion: jade/v1
+kind: Playbook
+metadata:
+  name: vault-digest
+  description: Every weekday morning, Vault runs its Daily digest flow and summarises it (Vault only).
+  tags: [vault]
+spec:
+  targets: [vault]
+  schedule: every weekday at 9am
+  tasks:
+    - name: Is Vault there
+      tool: status
+      register: st
+    - name: Run the digest
+      tool: flow
+      args: {name: Daily digest}
+      register: digest
+    - name: Summarise
+      tool: chat
+      args:
+        message: "Summarise today's digest in three lines: {{ digest.result | json }}"
+        session: digest

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lumen</title>
+<meta name="description" content="Search your notes by meaning. Join the first thousand.">
+<meta property="og:title" content="Lumen">
+<meta property="og:description" content="Search your notes by meaning. Join the first thousand.">
+<meta property="og:type" content="website">
+<meta name="generator" content="Jade Agent Stack 0.1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230b7a5b%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2244%22%20font-family%3D%22system-ui%2Csans-serif%22%20font-size%3D%2236%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%3EL%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>:root{--jade-radius:12px;--jade-font:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--jade-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--jade-space:8px;--jade-font-size:16px;--jade-shadow:0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);--jade-focus:var(--jade-accent);--jade-bg:#f3f8fa;--jade-fg:#0f2530;--jade-accent:#0e7490;--jade-accent-fg:#ffffff;--jade-surface:#fbfdfe;--jade-surface-2:#e8edf0;--jade-muted:#6f7e85;--jade-border:#d5dde0;--jade-user:#d8e8ed;--jade-user-fg:#0f2530;--jade-code:#ebf1f3;--jade-ok:#1f8a5b;--jade-warn:#a8650f;--jade-danger:#c0392b;--jade-syn-k:#0a576c;--jade-syn-s:#9a3f1c;--jade-syn-n:#7a4bb3;--jade-syn-c:#76848b;color-scheme:light}@media (prefers-color-scheme:dark){:root:not([data-jade-mode=light]){--jade-radius:12px;--jade-font:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--jade-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--jade-space:8px;--jade-font-size:16px;--jade-shadow:0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);--jade-focus:var(--jade-accent);--jade-bg:#081820;--jade-fg:#dcedf2;--jade-accent:#38bdf8;--jade-accent-fg:#0b0b0b;--jade-surface:#102128;--jade-surface-2:#1b2b33;--jade-muted:#83949a;--jade-border:#2a3a42;--jade-user:#113647;--jade-user-fg:#dcedf2;--jade-code:#15252d;--jade-ok:#1f8a5b;--jade-warn:#a8650f;--jade-danger:#c0392b;--jade-syn-k:#74d1fa;--jade-syn-s:#f0a47e;--jade-syn-n:#c8a4f0;--jade-syn-c:#7d8d94;color-scheme:dark}}:root[data-jade-mode=dark]{--jade-radius:12px;--jade-font:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--jade-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--jade-space:8px;--jade-font-size:16px;--jade-shadow:0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);--jade-focus:var(--jade-accent);--jade-bg:#081820;--jade-fg:#dcedf2;--jade-accent:#38bdf8;--jade-accent-fg:#0b0b0b;--jade-surface:#102128;--jade-surface-2:#1b2b33;--jade-muted:#83949a;--jade-border:#2a3a42;--jade-user:#113647;--jade-user-fg:#dcedf2;--jade-code:#15252d;--jade-ok:#1f8a5b;--jade-warn:#a8650f;--jade-danger:#c0392b;--jade-syn-k:#74d1fa;--jade-syn-s:#f0a47e;--jade-syn-n:#c8a4f0;--jade-syn-c:#7d8d94;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--jade-bg);color:var(--jade-fg);font:16px/1.6 var(--jade-font,system-ui,sans-serif);-webkit-font-smoothing:antialiased}
+a{color:var(--jade-accent)}img{max-width:100%;height:auto}
+h1,h2,h3{line-height:1.2;letter-spacing:-.01em;margin:0 0 .4em}h1{font-size:clamp(2.1rem,5vw,3.6rem)}h2{font-size:clamp(1.5rem,3vw,2.2rem)}h3{font-size:1.1rem}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;z-index:99;background:var(--jade-bg);padding:8px 12px;border-radius:8px}
+:focus-visible{outline:2px solid var(--jade-accent);outline-offset:2px}
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--jade-bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--jade-border)}
+.nav-in{display:flex;align-items:center;gap:20px;min-height:62px}
+.brand{font-weight:700;font-size:1.1rem;color:var(--jade-fg);text-decoration:none;display:flex;align-items:center;gap:8px}.brand .logo{height:28px;width:auto}
+.nav nav{display:flex;gap:4px;flex:1}.nav nav a{color:var(--jade-muted);text-decoration:none;padding:6px 10px;border-radius:8px}
+.nav nav a:hover,.nav nav a[aria-current]{color:var(--jade-fg);background:var(--jade-surface-2)}
+.nav-end{display:flex;align-items:center;gap:10px}.menu{display:none;background:none;border:0;font-size:1.4rem;color:var(--jade-fg);cursor:pointer}
+@media (max-width:760px){.menu{display:block;margin-left:auto}.nav nav{display:none;position:absolute;top:62px;left:0;right:0;flex-direction:column;background:var(--jade-bg);padding:10px 20px;border-bottom:1px solid var(--jade-border)}
+.nav-in.open nav{display:flex}.nav-end{display:none}.nav-in.open .nav-end{display:flex;position:absolute;top:calc(62px + var(--n,170px));left:20px}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:var(--jade-radius,10px);border:1px solid var(--jade-border);
+ background:var(--jade-surface);color:var(--jade-fg);font:inherit;font-weight:600;text-decoration:none;cursor:pointer;transition:transform .1s ease,background .15s}
+.btn:hover{transform:translateY(-1px)}.btn.primary{background:var(--jade-accent);border-color:var(--jade-accent);color:var(--jade-accent-fg)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.sec{padding:72px 0}.sec+.sec{padding-top:24px}.sec-head{max-width:680px;margin:0 auto 32px;text-align:center}
+.lead{font-size:1.15rem;color:var(--jade-muted);margin:0}
+.hero{padding:96px 0 64px;text-align:center}.hero .lead{max-width:640px;margin:0 auto}.hero .btns{justify-content:center}
+.hero.left{text-align:left}.hero.left .lead{margin:0}.hero.left .btns{justify-content:flex-start}
+.eyebrow{display:inline-block;font-size:.85rem;font-weight:600;color:var(--jade-accent);background:color-mix(in srgb,var(--jade-accent) 12%,transparent);padding:4px 12px;border-radius:999px;margin:0 0 16px}
+.hero-img{display:block;margin:48px auto 0;border-radius:calc(var(--jade-radius,10px)*1.4);border:1px solid var(--jade-border);box-shadow:0 30px 80px rgb(0 0 0/.15)}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr))}
+@media (max-width:900px){.grid{grid-template-columns:repeat(min(var(--cols,3),2),minmax(0,1fr))}}@media (max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:var(--jade-surface);border:1px solid var(--jade-border);border-radius:var(--jade-radius,10px);padding:22px}
+.feat .icon{font-size:1.6rem;width:44px;height:44px;display:grid;place-items:center;border-radius:10px;background:var(--jade-surface-2);margin-bottom:12px}
+.feat p,.steps p{color:var(--jade-muted);margin:0}
+.steps{list-style:none;padding:0;margin:0}.steps .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--jade-accent);color:var(--jade-accent-fg);font-weight:700;margin-bottom:10px}
+.stats{text-align:center}.stat .v{font-size:2.4rem;font-weight:800;color:var(--jade-accent)}.stat .k{color:var(--jade-muted)}
+.plan{display:flex;flex-direction:column;gap:10px}.plan .price{font-size:2rem;font-weight:800}.plan .price small{font-size:.9rem;font-weight:500;color:var(--jade-muted)}
+.plan ul{padding-left:18px;margin:0 0 8px;flex:1;color:var(--jade-muted)}
+.narrow{max-width:680px;margin:0 auto}
+.faq details{margin-bottom:10px}.faq summary{cursor:pointer;font-weight:600}.faq .md{margin-top:10px;color:var(--jade-muted)}
+.cta .wrap{background:var(--jade-accent);color:var(--jade-accent-fg);border-radius:calc(var(--jade-radius,10px)*1.6);padding:56px 28px;text-align:center}
+.cta .lead{color:inherit;opacity:.9}.cta .btns{justify-content:center}.cta .btn.primary{background:var(--jade-accent-fg);color:var(--jade-accent);border-color:transparent}
+.form{display:grid;gap:14px}.form label{display:grid;gap:6px;font-weight:600;font-size:.95rem}.form .req{color:var(--jade-danger,#c0392b);margin-left:2px}
+.form input,.form textarea,.keyform input{font:inherit;padding:10px 12px;border-radius:calc(var(--jade-radius,10px)*.7);border:1px solid var(--jade-border);background:var(--jade-bg);color:var(--jade-fg)}
+.form .check{display:flex;align-items:center;gap:8px;font-weight:500}.form-status:empty{display:none}.form-status.ok{color:var(--jade-ok,#1f8a5b)}.form-status.err{color:var(--jade-danger,#c0392b)}
+.keyform{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:14px}.keyform label{display:grid;gap:4px;flex:1;min-width:220px}
+.rec img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:10px}.rec p{color:var(--jade-muted);margin:0}.price-sm{font-weight:700;margin-top:8px}
+.skel{min-height:140px;background:linear-gradient(90deg,var(--jade-surface),var(--jade-surface-2),var(--jade-surface));background-size:200% 100%;animation:sk 1.2s infinite}@keyframes sk{to{background-position:-200% 0}}
+.gallery figure{margin:0;padding:10px}.gallery img{width:100%;border-radius:8px}.gallery figcaption{color:var(--jade-muted);font-size:.9rem;margin-top:6px}
+.md pre{background:var(--jade-code,var(--jade-surface-2));padding:14px;border-radius:8px;overflow:auto}.md code{font-family:ui-monospace,monospace;font-size:.92em}
+.md .table{overflow-x:auto}.md table{border-collapse:collapse}.md th,.md td{border:1px solid var(--jade-border);padding:6px 10px}
+.muted{color:var(--jade-muted)}
+.foot{border-top:1px solid var(--jade-border);padding:28px 0;margin-top:48px;color:var(--jade-muted);font-size:.92rem}
+.foot-in{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}.foot p{margin:0}.foot nav{display:flex;gap:16px}.foot a{color:inherit}
+jade-chat{display:block;border:1px solid var(--jade-border);border-radius:var(--jade-radius,10px);overflow:hidden}
+</style>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap nav-in"><a class="brand" href="./">Lumen</a><button class="menu" aria-label="Menu" aria-expanded="false" onclick="this.parentNode.classList.toggle('open');this.setAttribute('aria-expanded',this.parentNode.classList.contains('open'))">☰</button><nav aria-label="Main"></nav><div class="nav-end"><jade-theme-toggle></jade-theme-toggle></div></div></header>
+<main id="main">
+
+<section class="sec hero  "><div class="wrap"><p class="eyebrow">Early access</p><h1>Lumen</h1><p class="lead">Search your notes by meaning. Join the first thousand.</p><div class=btns><a class="btn primary" href="#join">Join the waitlist</a></div></div></section>
+<section class="sec features "><div class="wrap"><div class="grid" style="--cols:3"><div class="card feat"><div class=icon aria-hidden=true>🧭</div><h3>First in line</h3><p>Early members get in before anyone else.</p></div><div class="card feat"><div class=icon aria-hidden=true>🎁</div><h3>Founding price</h3><p>Keep the launch price for life.</p></div><div class="card feat"><div class=icon aria-hidden=true>📣</div><h3>Shape it</h3><p>Tell us what to build next.</p></div></div></div></section>
+<section class="sec form-sec " id="join"><div class="wrap"><header class="sec-head"><h2>Join the waitlist</h2></header><form id="form1" class="card form narrow"><label>Email<span class="req" aria-hidden="true">*</span><input name="email" type="email" required></label><label>Name<input name="name" type="text"></label><label>Company<input name="company" type="text"></label><div class="form-status" role="status"></div><button class="btn primary" type="submit">Join</button></form></div></section>
+
+</main>
+<footer class="foot"><div class="wrap foot-in"><p>© Lumen</p><nav aria-label="Footer"></nav></div></footer>
+<script type="module">
+import * as UI from "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js";
+window.UI = UI;
+(async () => {
+  try{{const f=document.getElementById('form1');const b=await UI.baseClient();f.addEventListener('submit',async e=>{e.preventDefault();const d={};for(const el of f.elements){if(!el.name)continue;d[el.name]=el.type==='checkbox'?el.checked:el.type==='number'?(el.value===''?null:+el.value):el.value.trim();}const st=f.querySelector('.form-status');const btn=f.querySelector('button');btn.disabled=true;try{await b.fetch('/api/collections/'+"waitlist"+'/records',{method:'POST',body:d,auth:false});f.reset();st.className='form-status ok';st.textContent="You're on the list. We'll email you.";}catch(x){st.className='form-status err';st.textContent=Object.values(x.fields||{}).join(' ')||x.message;}finally{btn.disabled=false;}});}}catch(e){console.error('[jade site]',e)}
+})();
+</script>
+</body>
+</html>

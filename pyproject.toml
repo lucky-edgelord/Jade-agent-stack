@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling>=1.21,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jade-agent-stack"
+version = "0.1.0"
+description = "A client toolkit for Jade Vault, Jade Agent Base, Jade Agent Kit and Jade Agent UI/UX: SDK, CLI, wizard, harness, playbooks and a site compiler."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "lucky-edgelord" }]
+dependencies = ["PyYAML>=6.0,<7"]
+keywords = ["agents", "mcp", "pocketbase", "static-site", "playbooks"]
+classifiers = ["Programming Language :: Python :: 3", "Operating System :: OS Independent", "Environment :: Console"]
+
+[project.optional-dependencies]
+keyring = ["keyring>=24,<26"]
+
+[project.scripts]
+jade = "jade.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/lucky-edgelord/jade-agent-stack"
+Documentation = "https://lucky-edgelord.github.io/jade-agent-stack/"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jade"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/jade", "README.md", "LICENSE", "schema", "examples"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true

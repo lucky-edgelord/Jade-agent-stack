@@ -1,0 +1,45 @@
+apiVersion: jade/v1
+kind: Playbook
+metadata:
+  name: base-products
+  description: A public products collection with two products (Base only), undone on failure.
+  tags: [base]
+spec:
+  targets: [base]
+  scopes: [read, write, schema]
+  vars:
+    collection: products
+  defaults:
+    fail_mode: rollback
+  tasks:
+    - name: Products collection
+      tool: collection_create
+      args:
+        name: "{{ collection }}"
+        fields:
+          - {name: title, type: text, required: true}
+          - {name: price, type: number}
+        listRule: ""
+        viewRule: ""
+      register: col
+      undo:
+        tool: collection_delete
+        args: {name: "{{ collection }}", confirm: "{{ collection }}"}
+    - name: First product
+      tool: record_create
+      args: {collection: "{{ collection }}", data: {title: Tea, price: 4}}
+      register: tea
+      undo:
+        tool: record_delete
+        args: {collection: "{{ collection }}", id: "{{ tea.result.id }}"}
+    - name: Second product
+      tool: record_create
+      args: {collection: "{{ collection }}", data: {title: Cake, price: 6}}
+      register: cake
+      undo:
+        tool: record_delete
+        args: {collection: "{{ collection }}", id: "{{ cake.result.id }}"}
+    - name: How many now
+      tool: records_list
+      args: {collection: "{{ collection }}"}
+      register: listed

@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lucky-edgelord.github.io/jade-agent-stack/schema/playbook.v1.json",
+  "title": "Jade Agent Stack playbook (jade/v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "jade/v1"
+    },
+    "kind": {
+      "const": "Playbook"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tasks"
+      ],
+      "properties": {
+        "targets": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "vault",
+              "base",
+              "kit",
+              "local"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "timeout": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "the whole run, e.g. 120s, 5m"
+        },
+        "vars": {
+          "type": "object"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "read",
+              "write",
+              "schema",
+              "hooks",
+              "site",
+              "settings",
+              "gateway",
+              "billing"
+            ]
+          },
+          "description": "Base scopes for the run's short-lived task credential"
+        },
+        "schedule": {
+          "type": "string",
+          "description": "when Vault should run it, e.g. \"every weekday at 9am\" (Vault only)"
+        },
+        "defaults": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "fail_mode": {
+              "enum": [
+                "stop",
+                "continue",
+                "rollback"
+              ]
+            },
+            "idempotent_strategy": {
+              "enum": [
+                "key",
+                "content-hash",
+                "none"
+              ]
+            }
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/task"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "target": {
+          "enum": [
+            "vault",
+            "base",
+            "kit",
+            "local"
+          ]
+        },
+        "tool": {
+          "type": "string"
+        },
+        "args": {
+          "type": "object"
+        },
+        "command": {
+          "type": "string",
+          "description": "local target: a shell command (approvals.shell)"
+        },
+        "register": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "delay": {
+          "type": "number",
+          "minimum": 0
+        },
+        "until": {
+          "type": "string"
+        },
+        "when": {
+          "type": "string"
+        },
+        "timeout": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "undo": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "target": {
+              "enum": [
+                "vault",
+                "base",
+                "kit",
+                "local"
+              ]
+            },
+            "tool": {
+              "type": "string"
+            },
+            "args": {
+              "type": "object"
+            },
+            "command": {
+              "type": "string"
+            }
+          }
+        },
+        "idempotency_key": {
+          "type": "string"
+        },
+        "fail_mode": {
+          "enum": [
+            "stop",
+            "continue",
+            "rollback"
+          ]
+        },
+        "block": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/task"
+          }
+        },
+        "rescue": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/task"
+          }
+        },
+        "always": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/task"
+          }
+        }
+      }
+    }
+  }
+}

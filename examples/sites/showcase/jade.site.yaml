@@ -1,0 +1,36 @@
+# Every section on one page: the demo of what a spec can do without a backend.
+name: Showcase
+tagline: Every section of the Jade site compiler on one page.
+theme: {name: neon, mode: auto}
+pages:
+  - path: /
+    title: Showcase
+    sections:
+      - {type: nav, cta: {label: GitHub, href: "https://github.com/lucky-edgelord/jade-agent-stack"}}
+      - {type: hero, eyebrow: Demo, title: "One file, a whole site", subtitle: "This page is 60 lines of YAML. Switch the theme at the top right.", buttons: [{label: See the sections, href: "#features"}, {label: Try the chat, href: "#chat"}]}
+      - {type: stats, items: [{value: "19", label: sections}, {value: "12", label: themes}, {value: "8", label: templates}, {value: "0", label: build tools}]}
+      - type: features
+        id: features
+        title: Sections
+        items:
+          - {icon: "🧱", title: Layout, text: "nav, hero, features, steps, stats, cta, footer."}
+          - {icon: "💬", title: AI, text: "chat (gateway, Ollama Cloud or demo), and surfaces agents build."}
+          - {icon: "🗄️", title: Backend, text: "form, records, auth, account and pricing, with Jade Agent Base."}
+      - {type: steps, items: [{title: Write the spec, text: "name, tagline, template."}, {title: Build, text: "jade site build"}, {title: Deploy, text: "jade site deploy"}]}
+      - {type: chat, id: chat, title: "A chat (demo mode)", mode: demo, height: 420px, suggestions: ["What is this?", "How do I deploy?"], replies: {"what": "A page built by the Jade Agent Stack site compiler from one YAML file.", "deploy": "Run jade site plan to see every call, then jade site deploy.", "*": "Connect a Jade Agent Base and this chat talks to a real model."}}
+      - type: surface
+        title: A surface (UI an agent can build)
+        spec:
+          root: r
+          data: {plans: [{label: Free, value: 620}, {label: Pro, value: 210}, {label: Team, value: 45}], qty: 3}
+          components:
+            - {id: r, component: Grid, props: {columns: 2}, children: [c1, c2]}
+            - {id: c1, component: Card, props: {title: Users by plan}, children: [d]}
+            - {id: d, component: Chart, props: {type: donut, data: {$data: /plans}, centerLabel: users}}
+            - {id: c2, component: Card, props: {title: A calculator}, children: [s, t]}
+            - {id: s, component: Slider, props: {label: Seats, bind: /qty, min: 1, max: 20}}
+            - {id: t, component: Text, props: {text: "You picked **{{/qty}}** seats."}}
+      - {type: code, title: The spec of a site, lang: yaml, code: "name: Acme AI\ntagline: Embeddings for every app.\ntemplate: saas"}
+      - {type: faq, items: [{q: "Does it need Node or a bundler?", a: "No. The compiler is Python with one dependency; pages load the UI components from a CDN."}, {q: "Can agents use it?", a: "Yes: `jade mcp`, `jade repl --jsonl`, `jade serve` or `import jade`."}]}
+      - {type: cta, title: Make one, text: "pip install jade-agent-stack", button: {label: Read the docs, href: "https://lucky-edgelord.github.io/jade-agent-stack/"}}
+      - {type: footer, links: [{label: Docs, href: "https://lucky-edgelord.github.io/jade-agent-stack/"}, {label: GitHub, href: "https://github.com/lucky-edgelord/jade-agent-stack"}]}

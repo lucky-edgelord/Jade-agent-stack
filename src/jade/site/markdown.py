@@ -133,7 +133,9 @@ def _blocks(lines: list[str], ids: set) -> str:
             while i < len(lines) and "|" in lines[i] and lines[i].strip():
                 rows.append(_cells(lines[i]))
                 i += 1
-            td = lambda t, c, k: f'<{t}{f" style=\"text-align:{al[k]}\"" if k < len(al) and al[k] else ""}>{inline(c)}</{t}>'
+            def td(t, c, k):
+                st = ' style="text-align:' + al[k] + '"' if k < len(al) and al[k] else ""
+                return f"<{t}{st}>{inline(c)}</{t}>"
             th = "".join(td("th", c, k) for k, c in enumerate(head))
             tb = "".join("<tr>" + "".join(td("td", r[k] if k < len(r) else "", k) for k in range(len(head))) + "</tr>" for r in rows)
             out.append(f'<div class="table"><table><thead><tr>{th}</tr></thead><tbody>{tb}</tbody></table></div>')
@@ -178,8 +180,10 @@ def _blocks(lines: list[str], ids: set) -> str:
                 inner = _blocks([first, *rest], ids) if any(r.strip() for r in rest) else inline(first)
                 if inner.startswith("<p>") and not any(not r.strip() for r in rest):
                     inner = re.sub(r"^<p>(.*?)</p>", r"\1", inner, count=1, flags=re.S)
-                lis.append(f'<li{" class=\"task\"" if box else ""}>{box}{inner}</li>')
-            out.append(f'<{tag}{f" start=\"{start}\"" if ordered and start != 1 else ""}>{"".join(lis)}</{tag}>')
+                cls = ' class="task"' if box else ""
+                lis.append(f"<li{cls}>{box}{inner}</li>")
+            st = f' start="{start}"' if ordered and start != 1 else ""
+            out.append(f"<{tag}{st}>" + "".join(lis) + f"</{tag}>")
             continue
         para = []
         while i < len(lines) and lines[i].strip() and not (para and _start(lines[i])) and not ("|" in lines[i] and i + 1 < len(lines) and _TSEP.match(lines[i + 1])):

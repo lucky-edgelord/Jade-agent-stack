@@ -1,0 +1,41 @@
+about: An AI API business, with pricing, sign-up, an account page with keys and usage, a chat playground and docs.
+theme: jade
+backend:
+  modules: [gateway, billing]
+  rate_limits: true
+  models:
+    - {name: house-chat, provider: ollama-cloud, upstream: gpt-oss:120b, kind: chat, price_in: 0.2, price_out: 0.8, description: "A strong general model"}
+  providers:
+    - {name: ollama-cloud, type: ollama-cloud, api_key_env: OLLAMA_API_KEY}
+  plans:
+    - {name: free, price_month: 0, monthly_tokens: 200000, rpm: 20, default: true, description: "Try it out"}
+    - {name: pro, price_month: 19, monthly_tokens: 20000000, rpm: 300, description: "For production apps"}
+  billing: {secret_key_env: STRIPE_SECRET_KEY, webhook_secret_env: STRIPE_WEBHOOK_SECRET, currency: usd, publish: [pro]}
+pages:
+  - path: /
+    title: Home
+    sections:
+      - nav
+      - {type: hero, eyebrow: "New", buttons: [{label: Start free, href: /account}, {label: See pricing, href: /pricing}]}
+      - type: features
+        title: Everything an AI app needs
+        items:
+          - {icon: "⚡", title: One API, text: "OpenAI and Ollama compatible endpoints, so your code already works."}
+          - {icon: "🔑", title: Keys and limits, text: "Per-user API keys with monthly caps and rate limits."}
+          - {icon: "💳", title: Billing built in, text: "Plans, Stripe Checkout and the customer portal."}
+      - type: steps
+        items:
+          - {title: Sign up, text: "Create an account in seconds."}
+          - {title: Make a key, text: "Copy it from your account page."}
+          - {title: Call the API, text: "Point any OpenAI client at us."}
+      - {type: cta, title: Start building today, text: "The free plan needs no card.", button: {label: Create an account, href: /account}}
+      - footer
+  - path: /pricing
+    title: Pricing
+    sections: [nav, {type: pricing, subtitle: "Pay for what you need. Cancel any time."}, {type: faq, items: [{q: "Can I change plans?", a: "Yes. Upgrade or cancel from your account page at any time."}, {q: "What counts as a token?", a: "Roughly ¾ of a word, in and out."}]}, footer]
+  - path: /playground
+    title: Playground
+    sections: [nav, {type: chat, title: Try the model, suggestions: [Explain embeddings simply, Write a haiku about APIs]}, footer]
+  - path: /account
+    title: Account
+    sections: [nav, account, footer]
