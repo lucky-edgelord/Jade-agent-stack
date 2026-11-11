@@ -273,7 +273,7 @@ def _vault_flow(ctx, name, input, timeout):
 
 
 # ---- base ----
-@command("base.tools", "The tools this Base token may use.", P("format", choices=("openai", "anthropic", "mcp")), P("names", "bool", "names only"))
+@command("base.tools", "The tools this Base token may use.", P("format", choices=("openai", "anthropic", "mcp"), help='the shape: openai, anthropic or mcp (default: with scope and destructive)'), P("names", "bool", "names only"))
 def _base_tools(ctx, format, names):
     t = ctx.harness().base.tools(format)
     if names:
@@ -290,20 +290,20 @@ def _base_call(ctx, tool, args, idempotency_key, timeout):
     return {"result": out, "idempotency_key": h.base.last_key}
 
 
-@command("base.audit", "The audit log: what agents did (and what was refused).", P("limit", "int", default=50), P("tool"))
+@command("base.audit", "The audit log: what agents did (and what was refused).", P("limit", "int", default=50, help='how many entries'), P("tool"))
 def _base_audit(ctx, limit, tool):
     return ctx.harness().call("base", "audit_list", {"limit": limit, **({"tool": tool} if tool else {})})
 
 
 @command("base.credential", "Mint a short-lived task credential (prints only its id, scopes and expiry).", P("task_id", required=True, positional=True),
-         P("scopes", "list", default=["read"]), P("ttl", default="15m"), mutates=True)
+         P("scopes", "list", default=["read"], help='the fewest scopes the task needs, comma-separated'), P("ttl", default="15m", help='how long it lasts: 15m, 2h (at most 24h)'), mutates=True)
 def _base_cred(ctx, task_id, scopes, ttl):
     c = ctx.harness().base.mint(task_id, scopes, ttl)
     return {k: v for k, v in c.items() if k != "token"}
 
 
 # ---- kit / ui ----
-@command("kit.page", "Write a page that runs Jade Agent Kit in the browser.", P("out", required=True, positional=True), P("features", "list", default=["agent"]),
+@command("kit.page", "Write a page that runs Jade Agent Kit in the browser.", P("out", required=True, positional=True), P("features", "list", default=["agent"], help='Kit features to load, comma-separated (agent, sqlite, bm25, …)'),
          P("ollama", help="Ollama host"), P("model"), P("title", default="Jade agent"), mutates=True)
 def _kit_page(ctx, out, features, ollama, model, title):
     from .resources import kit
@@ -312,7 +312,7 @@ def _kit_page(ctx, out, features, ollama, model, title):
 
 
 @command("ui.chat", "Write a page with a chat: full-screen, inline or a floating widget.", P("out", required=True, positional=True),
-         P("mount", default="full-screen", choices=("full-screen", "widget", "inline")), P("preset", default="jade", help="a theme"), P("mode", default="auto", choices=("auto", "light", "dark")),
+         P("mount", default="full-screen", choices=("full-screen", "widget", "inline"), help='full-screen, inline, or widget (a floating button)'), P("preset", default="jade", help="a theme"), P("mode", default="auto", choices=("auto", "light", "dark"), help='light, dark, or auto (follows the system)'),
          P("base", help="a Jade Agent Base URL"), P("title", default="Chat"), mutates=True)
 def _ui_chat(ctx, out, mount, preset, mode, base, title):
     from .resources import ui
@@ -427,8 +427,8 @@ def _site_sections(ctx, name):
     return sections.describe(name)
 
 
-@command("site.new", "Write a jade.site.yaml from a template.", P("name", required=True, positional=True), P("template", default="landing"), P("tagline", default=""),
-         P("theme"), P("dir", default="."), P("url"), mutates=True)
+@command("site.new", "Write a jade.site.yaml from a template.", P("name", required=True, positional=True), P("template", default="landing", help='a template (jade site templates)'), P("tagline", default="", help='one line under the name'),
+         P("theme", help='a theme (jade site themes)'), P("dir", default=".", help='the folder for jade.site.yaml'), P("url", help='the public address of the site'), mutates=True)
 def _site_new(ctx, name, template, tagline, theme, dir, url):
     from .site.spec import SPEC_NAME, Site, template as tpl
     tpl(template)
@@ -456,7 +456,7 @@ def _site_check(ctx, dir):
     return _site(dir).check()
 
 
-@command("site.build", "Compile the site to static files.", P("dir", default=".", positional=True), P("out", default="dist"), P("ui", help="UI/UX module URL"),
+@command("site.build", "Compile the site to static files.", P("dir", default=".", positional=True), P("out", default="dist", help='the output folder'), P("ui", help="UI/UX module URL"),
          P("kit", help="Kit module URL"), mutates=True)
 def _site_build(ctx, dir, out, ui, kit):
     s = _site(dir)
@@ -508,8 +508,8 @@ def _site_deploy(ctx, dir, yes):
     return {"ok": True, "url": e.get("url") or url, "calls": last.get("calls"), "run": last.get("run")}
 
 
-@command("site.preview", "Build and serve the site on localhost (UI/UX from the CDN unless --ui).", P("dir", default=".", positional=True), P("port", "int", default=8080),
-         P("ui"), surfaces=("cli",))
+@command("site.preview", "Build and serve the site on localhost (UI/UX from the CDN unless --ui).", P("dir", default=".", positional=True), P("port", "int", default=8080, help='the local port'),
+         P("ui", help='a UI/UX module URL (to preview a local build)'), surfaces=("cli",))
 def _site_preview(ctx, dir, port, ui):
     import functools
     import http.server
@@ -526,7 +526,7 @@ def _site_preview(ctx, dir, port, ui):
 
 # ---- agent ----
 @command("agent.ask", "Ask an agent: on Vault (its agent), or on Base (a model from config.models using Base's tools, through approvals).",
-         P("message", required=True, positional=True), P("target", default="vault", choices=("vault", "base")), P("name", default="jade"), P("steps", "int", default=8), mutates=True)
+         P("message", required=True, positional=True), P("target", default="vault", choices=("vault", "base"), help='vault (its agent) or base (a model here with Base tools)'), P("name", default="jade", help='the agent session name'), P("steps", "int", default=8, help='at most this many tool rounds'), mutates=True)
 def _agent_ask(ctx, message, target, name, steps):
     from .agent import Agent
     return Agent(ctx.harness(), name, target=target, max_steps=steps).ask(message)
@@ -545,14 +545,14 @@ def _docs_show(ctx, ref):
     return docs.show(ref)
 
 
-@command("docs.search", "Search the docs; each hit has a ref for docs.show.", P("query", required=True, positional=True), P("limit", "int", default=8))
+@command("docs.search", "Search the docs; each hit has a ref for docs.show.", P("query", required=True, positional=True), P("limit", "int", default=8, help='how many results'))
 def _docs_search(ctx, query, limit):
     from . import docs
     return docs.search(query, limit)
 
 
 @command("docs.build", "Build the docs: HTML for people, Markdown + llms.txt + catalog.json for agents.", P("out", default="docs", positional=True),
-         P("format", default="both", choices=("html", "md", "both")), P("check", "bool", "fail if the committed output is stale"), surfaces=("cli",))
+         P("format", default="both", choices=("html", "md", "both"), help='html, md or both'), P("check", "bool", "fail if the committed output is stale"), surfaces=("cli",))
 def _docs_build(ctx, out, format, check):
     from .docsbuild import build
     return build(Path(out), format=format, check=check)

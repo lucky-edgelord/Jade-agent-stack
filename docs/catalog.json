@@ -279,7 +279,7 @@
     {
      "name": "format",
      "type": "str",
-     "help": "",
+     "help": "the shape: openai, anthropic or mcp (default: with scope and destructive)",
      "choices": [
       "openai",
       "anthropic",
@@ -330,7 +330,7 @@
     {
      "name": "limit",
      "type": "int",
-     "help": "",
+     "help": "how many entries",
      "default": 50
     },
     {
@@ -354,7 +354,7 @@
     {
      "name": "scopes",
      "type": "list",
-     "help": "",
+     "help": "the fewest scopes the task needs, comma-separated",
      "default": [
       "read"
      ]
@@ -362,7 +362,7 @@
     {
      "name": "ttl",
      "type": "str",
-     "help": "",
+     "help": "how long it lasts: 15m, 2h (at most 24h)",
      "default": "15m"
     }
    ]
@@ -381,7 +381,7 @@
     {
      "name": "features",
      "type": "list",
-     "help": "",
+     "help": "Kit features to load, comma-separated (agent, sqlite, bm25, \u2026)",
      "default": [
       "agent"
      ]
@@ -418,7 +418,7 @@
     {
      "name": "mount",
      "type": "str",
-     "help": "",
+     "help": "full-screen, inline, or widget (a floating button)",
      "default": "full-screen",
      "choices": [
       "full-screen",
@@ -435,7 +435,7 @@
     {
      "name": "mode",
      "type": "str",
-     "help": "",
+     "help": "light, dark, or auto (follows the system)",
      "default": "auto",
      "choices": [
       "auto",
@@ -597,29 +597,29 @@
     {
      "name": "template",
      "type": "str",
-     "help": "",
+     "help": "a template (jade site templates)",
      "default": "landing"
     },
     {
      "name": "tagline",
      "type": "str",
-     "help": ""
+     "help": "one line under the name"
     },
     {
      "name": "theme",
      "type": "str",
-     "help": ""
+     "help": "a theme (jade site themes)"
     },
     {
      "name": "dir",
      "type": "str",
-     "help": "",
+     "help": "the folder for jade.site.yaml",
      "default": "."
     },
     {
      "name": "url",
      "type": "str",
-     "help": ""
+     "help": "the public address of the site"
     }
    ]
   },
@@ -650,7 +650,7 @@
     {
      "name": "out",
      "type": "str",
-     "help": "",
+     "help": "the output folder",
      "default": "dist"
     },
     {
@@ -710,13 +710,13 @@
     {
      "name": "port",
      "type": "int",
-     "help": "",
+     "help": "the local port",
      "default": 8080
     },
     {
      "name": "ui",
      "type": "str",
-     "help": ""
+     "help": "a UI/UX module URL (to preview a local build)"
     }
    ]
   },
@@ -734,7 +734,7 @@
     {
      "name": "target",
      "type": "str",
-     "help": "",
+     "help": "vault (its agent) or base (a model here with Base tools)",
      "default": "vault",
      "choices": [
       "vault",
@@ -744,13 +744,13 @@
     {
      "name": "name",
      "type": "str",
-     "help": "",
+     "help": "the agent session name",
      "default": "jade"
     },
     {
      "name": "steps",
      "type": "int",
-     "help": "",
+     "help": "at most this many tool rounds",
      "default": 8
     }
    ]
@@ -788,7 +788,7 @@
     {
      "name": "limit",
      "type": "int",
-     "help": "",
+     "help": "how many results",
      "default": 8
     }
    ]
@@ -807,7 +807,7 @@
     {
      "name": "format",
      "type": "str",
-     "help": "",
+     "help": "html, md or both",
      "default": "both",
      "choices": [
       "html",

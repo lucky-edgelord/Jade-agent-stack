@@ -125,7 +125,7 @@ The tools this Base token may use.
 
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
-| `format` | str (openai, anthropic, mcp) |  |  |
+| `format` | str (openai, anthropic, mcp) |  | the shape: openai, anthropic or mcp (default: with scope and destructive) |
 | `names` | bool |  | names only |
 
 ## base.call
@@ -153,7 +153,7 @@ The audit log: what agents did (and what was refused).
 
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
-| `limit` | int | `50` |  |
+| `limit` | int | `50` | how many entries |
 | `tool` | str |  |  |
 
 ## base.credential
@@ -165,8 +165,8 @@ Mint a short-lived task credential (prints only its id, scopes and expiry).
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
 | `task_id` (positional) required | str |  |  |
-| `scopes` | list | `['read']` |  |
-| `ttl` | str | `15m` |  |
+| `scopes` | list | `['read']` | the fewest scopes the task needs, comma-separated |
+| `ttl` | str | `15m` | how long it lasts: 15m, 2h (at most 24h) |
 
 ## kit.page
 
@@ -177,7 +177,7 @@ Write a page that runs Jade Agent Kit in the browser.
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
 | `out` (positional) required | str |  |  |
-| `features` | list | `['agent']` |  |
+| `features` | list | `['agent']` | Kit features to load, comma-separated (agent, sqlite, bm25, …) |
 | `ollama` | str |  | Ollama host |
 | `model` | str |  |  |
 | `title` | str | `Jade agent` |  |
@@ -191,9 +191,9 @@ Write a page with a chat: full-screen, inline or a floating widget.
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
 | `out` (positional) required | str |  |  |
-| `mount` | str (full-screen, widget, inline) | `full-screen` |  |
+| `mount` | str (full-screen, widget, inline) | `full-screen` | full-screen, inline, or widget (a floating button) |
 | `preset` | str | `jade` | a theme |
-| `mode` | str (auto, light, dark) | `auto` |  |
+| `mode` | str (auto, light, dark) | `auto` | light, dark, or auto (follows the system) |
 | `base` | str |  | a Jade Agent Base URL |
 | `title` | str | `Chat` |  |
 
@@ -298,11 +298,11 @@ Write a jade.site.yaml from a template.
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
 | `name` (positional) required | str |  |  |
-| `template` | str | `landing` |  |
-| `tagline` | str |  |  |
-| `theme` | str |  |  |
-| `dir` | str | `.` |  |
-| `url` | str |  |  |
+| `template` | str | `landing` | a template (jade site templates) |
+| `tagline` | str |  | one line under the name |
+| `theme` | str |  | a theme (jade site themes) |
+| `dir` | str | `.` | the folder for jade.site.yaml |
+| `url` | str |  | the public address of the site |
 
 ## site.check
 
@@ -323,7 +323,7 @@ Compile the site to static files.
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
 | `dir` (positional) | str | `.` |  |
-| `out` | str | `dist` |  |
+| `out` | str | `dist` | the output folder |
 | `ui` | str |  | UI/UX module URL |
 | `kit` | str |  | Kit module URL |
 
@@ -357,8 +357,8 @@ Build and serve the site on localhost (UI/UX from the CDN unless --ui).
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
 | `dir` (positional) | str | `.` |  |
-| `port` | int | `8080` |  |
-| `ui` | str |  |  |
+| `port` | int | `8080` | the local port |
+| `ui` | str |  | a UI/UX module URL (to preview a local build) |
 
 ## agent.ask
 
@@ -369,9 +369,9 @@ Ask an agent: on Vault (its agent), or on Base (a model from config.models using
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
 | `message` (positional) required | str |  |  |
-| `target` | str (vault, base) | `vault` |  |
-| `name` | str | `jade` |  |
-| `steps` | int | `8` |  |
+| `target` | str (vault, base) | `vault` | vault (its agent) or base (a model here with Base tools) |
+| `name` | str | `jade` | the agent session name |
+| `steps` | int | `8` | at most this many tool rounds |
 
 ## docs.topics
 
@@ -398,7 +398,7 @@ Search the docs; each hit has a ref for docs.show.
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
 | `query` (positional) required | str |  |  |
-| `limit` | int | `8` |  |
+| `limit` | int | `8` | how many results |
 
 ## docs.build
 
@@ -409,7 +409,7 @@ Build the docs: HTML for people, Markdown + llms.txt + catalog.json for agents.
 | Parameter | Type | Default | Meaning |
 | --- | --- | --- | --- |
 | `out` (positional) | str | `docs` |  |
-| `format` | str (html, md, both) | `both` |  |
+| `format` | str (html, md, both) | `both` | html, md or both |
 | `check` | bool |  | fail if the committed output is stale |
 
 ## commands
