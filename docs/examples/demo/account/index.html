@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account · Nimbus AI</title>
+<meta name="description" content="Embeddings, chat and search for your app, billed by the token.">
+<meta property="og:title" content="Account · Nimbus AI">
+<meta property="og:description" content="Embeddings, chat and search for your app, billed by the token.">
+<meta property="og:type" content="website">
+<meta name="jade-base" content="https://demo.jade.invalid">
+<meta name="generator" content="Jade Agent Stack 0.1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230b7a5b%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2244%22%20font-family%3D%22system-ui%2Csans-serif%22%20font-size%3D%2236%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%3EN%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>:root{--jade-radius:12px;--jade-font:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--jade-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--jade-space:8px;--jade-font-size:16px;--jade-shadow:0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);--jade-focus:var(--jade-accent);--jade-bg:#f3f8fa;--jade-fg:#0f2530;--jade-accent:#0e7490;--jade-accent-fg:#ffffff;--jade-surface:#fbfdfe;--jade-surface-2:#e8edf0;--jade-muted:#6f7e85;--jade-border:#d5dde0;--jade-user:#d8e8ed;--jade-user-fg:#0f2530;--jade-code:#ebf1f3;--jade-ok:#1f8a5b;--jade-warn:#a8650f;--jade-danger:#c0392b;--jade-syn-k:#0a576c;--jade-syn-s:#9a3f1c;--jade-syn-n:#7a4bb3;--jade-syn-c:#76848b;color-scheme:light}@media (prefers-color-scheme:dark){:root:not([data-jade-mode=light]){--jade-radius:12px;--jade-font:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--jade-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--jade-space:8px;--jade-font-size:16px;--jade-shadow:0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);--jade-focus:var(--jade-accent);--jade-bg:#081820;--jade-fg:#dcedf2;--jade-accent:#38bdf8;--jade-accent-fg:#0b0b0b;--jade-surface:#102128;--jade-surface-2:#1b2b33;--jade-muted:#83949a;--jade-border:#2a3a42;--jade-user:#113647;--jade-user-fg:#dcedf2;--jade-code:#15252d;--jade-ok:#1f8a5b;--jade-warn:#a8650f;--jade-danger:#c0392b;--jade-syn-k:#74d1fa;--jade-syn-s:#f0a47e;--jade-syn-n:#c8a4f0;--jade-syn-c:#7d8d94;color-scheme:dark}}:root[data-jade-mode=dark]{--jade-radius:12px;--jade-font:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--jade-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--jade-space:8px;--jade-font-size:16px;--jade-shadow:0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);--jade-focus:var(--jade-accent);--jade-bg:#081820;--jade-fg:#dcedf2;--jade-accent:#38bdf8;--jade-accent-fg:#0b0b0b;--jade-surface:#102128;--jade-surface-2:#1b2b33;--jade-muted:#83949a;--jade-border:#2a3a42;--jade-user:#113647;--jade-user-fg:#dcedf2;--jade-code:#15252d;--jade-ok:#1f8a5b;--jade-warn:#a8650f;--jade-danger:#c0392b;--jade-syn-k:#74d1fa;--jade-syn-s:#f0a47e;--jade-syn-n:#c8a4f0;--jade-syn-c:#7d8d94;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--jade-bg);color:var(--jade-fg);font:16px/1.6 var(--jade-font,system-ui,sans-serif);-webkit-font-smoothing:antialiased}
+a{color:var(--jade-accent)}img{max-width:100%;height:auto}
+h1,h2,h3{line-height:1.2;letter-spacing:-.01em;margin:0 0 .4em}h1{font-size:clamp(2.1rem,5vw,3.6rem)}h2{font-size:clamp(1.5rem,3vw,2.2rem)}h3{font-size:1.1rem}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;z-index:99;background:var(--jade-bg);padding:8px 12px;border-radius:8px}
+:focus-visible{outline:2px solid var(--jade-accent);outline-offset:2px}
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--jade-bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--jade-border)}
+.nav-in{display:flex;align-items:center;gap:20px;min-height:62px}
+.brand{font-weight:700;font-size:1.1rem;color:var(--jade-fg);text-decoration:none;display:flex;align-items:center;gap:8px}.brand .logo{height:28px;width:auto}
+.nav nav{display:flex;gap:4px;flex:1}.nav nav a{color:var(--jade-muted);text-decoration:none;padding:6px 10px;border-radius:8px}
+.nav nav a:hover,.nav nav a[aria-current]{color:var(--jade-fg);background:var(--jade-surface-2)}
+.nav-end{display:flex;align-items:center;gap:10px}.menu{display:none;background:none;border:0;font-size:1.4rem;color:var(--jade-fg);cursor:pointer}
+@media (max-width:760px){.menu{display:block;margin-left:auto}.nav nav{display:none;position:absolute;top:62px;left:0;right:0;flex-direction:column;background:var(--jade-bg);padding:10px 20px;border-bottom:1px solid var(--jade-border)}
+.nav-in.open nav{display:flex}.nav-end{display:none}.nav-in.open .nav-end{display:flex;position:absolute;top:calc(62px + var(--n,170px));left:20px}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:var(--jade-radius,10px);border:1px solid var(--jade-border);
+ background:var(--jade-surface);color:var(--jade-fg);font:inherit;font-weight:600;text-decoration:none;cursor:pointer;transition:transform .1s ease,background .15s}
+.btn:hover{transform:translateY(-1px)}.btn.primary{background:var(--jade-accent);border-color:var(--jade-accent);color:var(--jade-accent-fg)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.sec{padding:72px 0}.sec+.sec{padding-top:24px}.sec-head{max-width:680px;margin:0 auto 32px;text-align:center}
+.lead{font-size:1.15rem;color:var(--jade-muted);margin:0}
+.hero{padding:96px 0 64px;text-align:center}.hero .lead{max-width:640px;margin:0 auto}.hero .btns{justify-content:center}
+.hero.left{text-align:left}.hero.left .lead{margin:0}.hero.left .btns{justify-content:flex-start}
+.eyebrow{display:inline-block;font-size:.85rem;font-weight:600;color:var(--jade-accent);background:color-mix(in srgb,var(--jade-accent) 12%,transparent);padding:4px 12px;border-radius:999px;margin:0 0 16px}
+.hero-img{display:block;margin:48px auto 0;border-radius:calc(var(--jade-radius,10px)*1.4);border:1px solid var(--jade-border);box-shadow:0 30px 80px rgb(0 0 0/.15)}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr))}
+@media (max-width:900px){.grid{grid-template-columns:repeat(min(var(--cols,3),2),minmax(0,1fr))}}@media (max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:var(--jade-surface);border:1px solid var(--jade-border);border-radius:var(--jade-radius,10px);padding:22px}
+.feat .icon{font-size:1.6rem;width:44px;height:44px;display:grid;place-items:center;border-radius:10px;background:var(--jade-surface-2);margin-bottom:12px}
+.feat p,.steps p{color:var(--jade-muted);margin:0}
+.steps{list-style:none;padding:0;margin:0}.steps .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--jade-accent);color:var(--jade-accent-fg);font-weight:700;margin-bottom:10px}
+.stats{text-align:center}.stat .v{font-size:2.4rem;font-weight:800;color:var(--jade-accent)}.stat .k{color:var(--jade-muted)}
+.plan{display:flex;flex-direction:column;gap:10px}.plan .price{font-size:2rem;font-weight:800}.plan .price small{font-size:.9rem;font-weight:500;color:var(--jade-muted)}
+.plan ul{padding-left:18px;margin:0 0 8px;flex:1;color:var(--jade-muted)}
+.narrow{max-width:680px;margin:0 auto}
+.faq details{margin-bottom:10px}.faq summary{cursor:pointer;font-weight:600}.faq .md{margin-top:10px;color:var(--jade-muted)}
+.cta .wrap{background:var(--jade-accent);color:var(--jade-accent-fg);border-radius:calc(var(--jade-radius,10px)*1.6);padding:56px 28px;text-align:center}
+.cta .lead{color:inherit;opacity:.9}.cta .btns{justify-content:center}.cta .btn.primary{background:var(--jade-accent-fg);color:var(--jade-accent);border-color:transparent}
+.form{display:grid;gap:14px}.form label{display:grid;gap:6px;font-weight:600;font-size:.95rem}.form .req{color:var(--jade-danger,#c0392b);margin-left:2px}
+.form input,.form textarea,.keyform input{font:inherit;padding:10px 12px;border-radius:calc(var(--jade-radius,10px)*.7);border:1px solid var(--jade-border);background:var(--jade-bg);color:var(--jade-fg)}
+.form .check{display:flex;align-items:center;gap:8px;font-weight:500}.form-status:empty{display:none}.form-status.ok{color:var(--jade-ok,#1f8a5b)}.form-status.err{color:var(--jade-danger,#c0392b)}
+.keyform{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:14px}.keyform label{display:grid;gap:4px;flex:1;min-width:220px}
+.rec img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:10px}.rec p{color:var(--jade-muted);margin:0}.price-sm{font-weight:700;margin-top:8px}
+.skel{min-height:140px;background:linear-gradient(90deg,var(--jade-surface),var(--jade-surface-2),var(--jade-surface));background-size:200% 100%;animation:sk 1.2s infinite}@keyframes sk{to{background-position:-200% 0}}
+.gallery figure{margin:0;padding:10px}.gallery img{width:100%;border-radius:8px}.gallery figcaption{color:var(--jade-muted);font-size:.9rem;margin-top:6px}
+.md pre{background:var(--jade-code,var(--jade-surface-2));padding:14px;border-radius:8px;overflow:auto}.md code{font-family:ui-monospace,monospace;font-size:.92em}
+.md .table{overflow-x:auto}.md table{border-collapse:collapse}.md th,.md td{border:1px solid var(--jade-border);padding:6px 10px}
+.muted{color:var(--jade-muted)}
+.foot{border-top:1px solid var(--jade-border);padding:28px 0;margin-top:48px;color:var(--jade-muted);font-size:.92rem}
+.foot-in{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}.foot p{margin:0}.foot nav{display:flex;gap:16px}.foot a{color:inherit}
+jade-chat{display:block;border:1px solid var(--jade-border);border-radius:var(--jade-radius,10px);overflow:hidden}
+</style>
+<script>window.JADE_DEMO={"url": "https://demo.jade.invalid", "site": "nimbus-ai", "plans": [{"name": "free", "price_month": 0, "monthly_tokens": 200000, "rpm": 20, "default": true, "description": "Try it out"}, {"name": "pro", "price_month": 19, "monthly_tokens": 20000000, "rpm": 300, "description": "For production apps"}, {"name": "team", "price_month": 99, "monthly_tokens": 150000000, "rpm": 1200, "description": "For teams with many apps"}], "collections": [{"name": "waitlist", "fields": [{"name": "email", "type": "email", "label": "Email", "required": true}, {"name": "company", "type": "text", "label": "Company", "required": false}], "records": [], "list": "admin", "create": "anyone"}, {"name": "models", "fields": [{"name": "title", "type": "text", "label": "Title", "required": true}, {"name": "description", "type": "text", "label": "Description", "required": false}, {"name": "price", "type": "text", "label": "Price", "required": false}], "records": [{"title": "nimbus-chat", "description": "A strong general model for chat and tools.", "price": "$0.20 / 1M in"}, {"title": "nimbus-embed", "description": "Small, fast embeddings for search.", "price": "$0.02 / 1M"}, {"title": "nimbus-decide", "description": "Classify and route in milliseconds.", "price": "$0.05 / 1M"}], "list": "anyone", "view": "anyone"}]};</script>
+<script>/* Jade demo backend: a pretend Jade Agent Base that lives in this browser tab (localStorage), so a site with
+   `demo: true` works with no server: sign-up and sign-in, plans and a simulated checkout, account usage and API keys,
+   forms that save, and record lists. Nothing leaves the browser and no payment is taken.
+   It answers fetch() calls to DEMO_URL in the shapes Jade Agent Base uses. */
+(function () {
+  var CFG = window.JADE_DEMO || {};
+  var URL0 = CFG.url || 'https://demo.jade.invalid';
+  var KEY = 'jade-demo:' + (CFG.site || 'site');
+  var realFetch = window.fetch.bind(window);
+  var rid = function (n) { var s = '', c = 'abcdefghijklmnopqrstuvwxyz0123456789'; for (var i = 0; i < (n || 15); i++) s += c[Math.floor(Math.random() * c.length)]; return s; };
+  var now = function () { return new Date().toISOString().replace('T', ' ').replace(/\.\d+Z$/, '.000Z'); };
+  function seed() {
+    var db = { users: [], keys: [], records: {}, usage: {}, plans: [] };
+    (CFG.plans || []).forEach(function (p, i) {
+      db.plans.push({ id: 'plan' + i, collectionName: 'plans', name: p.name, description: p.description || '', price_month: p.price_month || 0, monthly_tokens: p.monthly_tokens || 0,
+        monthly_budget: p.monthly_budget || 0, rpm: p.rpm || 0, default: !!p.default, active: p.active !== false, stripe_price: p.price_month ? 'price_demo_' + p.name : '' });
+    });
+    (CFG.collections || []).forEach(function (c) { db.records[c.name] = (c.records || []).map(function (r) { return Object.assign({ id: rid(), collectionName: c.name, created: now() }, r); }); });
+    return db;
+  }
+  function load() { try { var d = JSON.parse(localStorage.getItem(KEY)); if (d && d.v === 1) return d; } catch (e) {} var s = seed(); s.v = 1; return s; }
+  var db = load();
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) {} }
+  save();
+  function res(status, body, headers) {
+    return Promise.resolve(new Response(status === 204 ? null : JSON.stringify(body), { status: status, headers: Object.assign({ 'Content-Type': 'application/json' }, headers || {}) }));
+  }
+  function err(status, message, fields) {
+    var data = {}; Object.keys(fields || {}).forEach(function (k) { data[k] = { code: 'validation_invalid', message: fields[k] }; });
+    return res(status, { status: status, message: message, data: data });
+  }
+  function list(items) { return res(200, { items: items, page: 1, perPage: items.length, totalItems: items.length, totalPages: 1 }); }
+  function pub(u) { return { id: u.id, collectionId: '_pb_users_auth_', collectionName: 'users', email: u.email, name: u.name || '', avatar: '', verified: true, plan: u.plan || '',
+    subscription_status: u.plan ? 'active' : '', current_period_end: u.plan ? new Date(Date.now() + 30 * 864e5).toISOString() : '', created: u.created, updated: u.created }; }
+  // tokens look like PocketBase's (a JWT with an expiry), so the UI keeps them; the signature is just "demo"
+  var b64 = function (o) { return btoa(JSON.stringify(o)).replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_'); };
+  function tokenFor(u) { return b64({ alg: 'none', typ: 'JWT' }) + '.' + b64({ id: u.id, type: 'auth', collectionId: '_pb_users_auth_', exp: Math.floor(Date.now() / 1000) + 30 * 86400 }) + '.demo'; }
+  function who(h) {
+    var a = (h.get('Authorization') || '').replace(/^Bearer\s+/i, '');
+    if (/\.demo$/.test(a)) { try { var id = JSON.parse(atob(a.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).id; return db.users.find(function (u) { return u.id === id; }) || null; } catch (e) { return null; } }
+    if (a.indexOf('jab_') === 0) { var k = db.keys.find(function (k) { return k.key === a && !k.revoked; }); return k ? db.users.find(function (u) { return u.id === k.user; }) : null; }
+    return null;
+  }
+  function planOf(u) { return db.plans.find(function (p) { return p.name === (u && u.plan); }) || db.plans.find(function (p) { return p.default; }) || { name: 'free', monthly_tokens: 0, monthly_budget: 0, rpm: 0 }; }
+  function rule(col, op) { var c = (CFG.collections || []).find(function (x) { return x.name === col; }); return c ? c[op] : undefined; }
+  function allowed(r, u, rec) {
+    if (r === 'anyone' || r === '') return true;
+    if (r === 'users') return !!u;
+    if (r === 'owner') return !!u && (!rec || rec.user === u.id);
+    return false; // admin, or nothing said
+  }
+  function handle(url, init) {
+    var u = new URL(url), p = u.pathname, m = (init.method || 'GET').toUpperCase(), h = new Headers(init.headers || {});
+    var body = {}; try { body = init.body ? JSON.parse(init.body) : {}; } catch (e) {}
+    var me = who(h);
+    if (p === '/api/health') return res(200, { message: 'API is healthy (demo).' });
+    if (p === '/api/collections/users/auth-methods') return res(200, { password: { enabled: true, identityFields: ['email'] }, oauth2: { enabled: false, providers: [] }, mfa: { enabled: false }, otp: { enabled: false } });
+    if (p === '/api/collections/users/records' && m === 'POST') {
+      var f = {};
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(body.email || '')) f.email = 'Must be a valid email address.';
+      else if (db.users.some(function (x) { return x.email === body.email; })) f.email = 'Value must be unique.';
+      if ((body.password || '').length < 8) f.password = 'Must be at least 8 character(s).';
+      if (body.passwordConfirm !== undefined && body.passwordConfirm !== body.password) f.passwordConfirm = "Values don't match.";
+      if (Object.keys(f).length) return err(400, 'Failed to create record.', f);
+      var nu = { id: rid(), email: body.email, password: body.password, name: body.name || '', plan: '', created: now() }; db.users.push(nu); save();
+      return res(200, pub(nu));
+    }
+    if (p === '/api/collections/users/auth-with-password') {
+      var x = db.users.find(function (y) { return y.email === body.identity && y.password === body.password; });
+      return x ? res(200, { token: tokenFor(x), record: pub(x) }) : err(400, 'Failed to authenticate.');
+    }
+    if (p === '/api/collections/users/auth-refresh') return me ? res(200, { token: tokenFor(me), record: pub(me) }) : err(401, 'The request requires valid record authorization token.');
+    if (p === '/api/collections/users/request-password-reset') return res(204);
+    if (p === '/api/collections/plans/records') return list(db.plans.filter(function (x) { return x.active; }).sort(function (a, b) { return a.price_month - b.price_month; }));
+    if (p === '/api/gateway/me') {
+      if (!me) return err(401, 'Sign in or use an API key.');
+      var pl = planOf(me), use = db.usage[me.id] || { tokens: 0, cost: 0 };
+      return res(200, { user: me.id, plan: { name: pl.name, monthly_tokens: pl.monthly_tokens, monthly_budget: pl.monthly_budget, rpm: pl.rpm }, month: use });
+    }
+    if (p === '/api/billing/me') return me ? res(200, { plan: me.plan || '', status: me.plan ? 'active' : '', current_period_end: pub(me).current_period_end, has_billing_account: !!me.plan }) : err(401, 'Sign in.');
+    if (p === '/api/billing/checkout') {
+      if (!me) return err(401, 'Sign in.');
+      var plan = db.plans.find(function (x) { return x.name === body.plan && x.stripe_price; });
+      if (!plan) return err(400, 'The ' + body.plan + ' plan is not for sale.');
+      me.plan = plan.name; db.usage[me.id] = db.usage[me.id] || { tokens: 0, cost: 0 }; save();
+      var back = new URL(location.href); back.searchParams.set('billing', 'success');
+      notice('Demo checkout: you are now on ' + plan.name + '. No payment was taken.');
+      return res(200, { url: back.toString() });
+    }
+    if (p === '/api/billing/portal') { if (!me) return err(401, 'Sign in.'); notice('Demo: this is where the Stripe customer portal would open.'); return res(200, { url: location.href }); }
+    if (p === '/api/collections/api_keys/records') {
+      if (!me) return err(401, 'Sign in.');
+      return list(db.keys.filter(function (k) { return k.user === me.id && !k.revoked; }).map(function (k) { return { id: k.id, name: k.name, prefix: k.prefix, created: k.created, last_used: k.last_used || '', revoked: false, user: k.user }; }).reverse());
+    }
+    if (p === '/api/gateway/keys' && m === 'POST') {
+      if (!me) return err(401, 'Sign in.');
+      var key = 'jab_' + rid(40), k = { id: rid(), user: me.id, name: body.name || 'key', key: key, prefix: key.slice(0, 16), created: now() };
+      db.keys.push(k); var us = db.usage[me.id] || (db.usage[me.id] = { tokens: 0, cost: 0 }); us.tokens += 1200; us.cost += 0.002; save();
+      return res(200, { note: 'Keep the key now: it is not shown again. (Demo: it only works on this page.)', key: key, id: k.id, prefix: k.prefix, name: k.name });
+    }
+    var rv = p.match(/^\/api\/gateway\/keys\/([^/]+)\/revoke$/);
+    if (rv) { var kk = db.keys.find(function (k) { return k.id === decodeURIComponent(rv[1]) && me && k.user === me.id; }); if (!kk) return err(404, 'No such key.'); kk.revoked = true; save(); return res(200, { revoked: kk.id }); }
+    var cr = p.match(/^\/api\/collections\/([^/]+)\/records(?:\/([^/]+))?$/);
+    if (cr && db.records[cr[1]]) {
+      var col = cr[1], items = db.records[col];
+      if (m === 'POST') {
+        if (!allowed(rule(col, 'create'), me)) return err(403, 'Only admins can perform this action.');
+        var spec = (CFG.collections || []).find(function (c) { return c.name === col; }) || {}, bad = {};
+        (spec.fields || []).forEach(function (fd) {
+          var v = body[fd.name];
+          if (fd.required && (v === undefined || v === null || v === '' || v === false)) bad[fd.name] = 'Cannot be blank.';
+          else if (fd.type === 'email' && v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) bad[fd.name] = 'Must be a valid email address.';
+        });
+        if (Object.keys(bad).length) return err(400, 'Failed to create record.', bad);
+        var rec = Object.assign({}, body, { id: rid(), collectionName: col, created: now() }); if (me) rec.user = me.id; items.push(rec); save();
+        return res(200, rec);
+      }
+      if (!allowed(rule(col, cr[2] ? 'view' : 'list'), me)) return cr[2] ? err(404, 'The requested resource wasn\'t found.') : list([]);
+      if (cr[2]) { var one = items.find(function (r) { return r.id === cr[2]; }); return one ? res(200, one) : err(404, 'The requested resource wasn\'t found.'); }
+      var sort = u.searchParams.get('sort'), out = items.slice();
+      if (sort) { var d = sort[0] === '-' ? -1 : 1, f2 = sort.replace(/^[-+]/, ''); out.sort(function (a, b) { return (a[f2] > b[f2] ? 1 : a[f2] < b[f2] ? -1 : 0) * d; }); }
+      var per = +u.searchParams.get('perPage') || 30;
+      return list(out.slice(0, per));
+    }
+    return err(404, 'The demo backend has no ' + m + ' ' + p + '.');
+  }
+  window.fetch = function (input, init) {
+    var url = typeof input === 'string' ? input : input instanceof URL ? input.href : input && input.url;
+    if (url && url.indexOf(URL0) === 0) {
+      init = init || {};
+      if (input instanceof Request) init = Object.assign({ method: input.method, headers: input.headers }, init);
+      return new Promise(function (ok) { setTimeout(ok, 120 + Math.random() * 180); }).then(function () { return handle(url, init); });
+    }
+    return realFetch(input, init);
+  };
+  function notice(text) {
+    var n = document.createElement('div'); n.setAttribute('role', 'status'); n.textContent = text;
+    n.style.cssText = 'position:fixed;left:50%;bottom:64px;transform:translateX(-50%);background:var(--jade-fg,#111);color:var(--jade-bg,#fff);padding:10px 16px;border-radius:10px;z-index:2147483646;font:14px system-ui;box-shadow:0 8px 24px rgb(0 0 0/.2);max-width:92vw';
+    (document.body || document.documentElement).appendChild(n); setTimeout(function () { n.remove(); }, 4500);
+  }
+  window.JadeDemo = { reset: function () { localStorage.removeItem(KEY); Object.keys(localStorage).filter(function (k) { return k.indexOf('jade-base:') === 0; }).forEach(function (k) { localStorage.removeItem(k); }); location.reload(); }, db: function () { return db; } };
+  document.addEventListener('DOMContentLoaded', function () {
+    var bar = document.createElement('div'); bar.className = 'jade-demo-bar';
+    bar.innerHTML = '<span><b>Demo</b>: a pretend backend runs in this browser. Sign up with any email; nothing is sent anywhere and no payment is taken.</span> <button type="button">Reset demo</button>';
+    bar.style.cssText = 'position:sticky;top:0;z-index:30;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;padding:7px 14px;font:13px/1.4 system-ui;background:color-mix(in srgb,var(--jade-accent,#0b7a5b) 14%,var(--jade-bg,#fff));color:var(--jade-fg,#111);border-bottom:1px solid var(--jade-border,#ddd)';
+    var b = bar.querySelector('button'); b.style.cssText = 'font:inherit;padding:3px 10px;border-radius:7px;border:1px solid var(--jade-border,#ccc);background:var(--jade-bg,#fff);color:inherit;cursor:pointer';
+    b.onclick = window.JadeDemo.reset;
+    document.body.insertBefore(bar, document.body.firstChild);
+  });
+})();
+</script>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap nav-in"><a class="brand" href="../">Nimbus AI</a><button class="menu" aria-label="Menu" aria-expanded="false" onclick="this.parentNode.classList.toggle('open');this.setAttribute('aria-expanded',this.parentNode.classList.contains('open'))">☰</button><nav aria-label="Main"><a href="../pricing/">Pricing</a><a href="../playground/">Playground</a><a href="../account/" aria-current=page>Account</a></nav><div class="nav-end"><jade-theme-toggle></jade-theme-toggle></div></div></header>
+<main id="main">
+
+<section class="sec account "><div class="wrap"><header class="sec-head"><h2>Your account</h2></header><div class="narrow" data-signed-out><jade-auth></jade-auth></div><jade-account currency="USD"></jade-account></div></section>
+
+</main>
+<footer class="foot"><div class="wrap foot-in"><p>© Nimbus AI</p><nav aria-label="Footer"></nav></div></footer>
+<script type="module">
+import * as UI from "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js";
+window.UI = UI;
+(async () => {
+  try{{const c=await UI.baseClient();const show=()=>{for(const a of document.querySelectorAll('[data-signed-out]'))a.hidden=c.signedIn;};c.addEventListener('change',show);show();}}catch(e){console.error('[jade site]',e)}
+})();
+</script>
+</body>
+</html>

@@ -13,6 +13,17 @@ from typing import Any
 from .. import compat
 from . import markdown, sections, themes
 
+import re
+
+DEMO_URL = "https://demo.jade.invalid"
+DEMO_JS = Path(__file__).with_name("demo-backend.js")
+
+
+def fields_of(c: dict) -> list:
+    from .spec import fields
+    return fields(c)
+
+
 E = lambda s: html.escape(str(s if s is not None else ""), quote=True)
 
 SITE_CSS = """
@@ -89,6 +100,16 @@ def compile_site(s: dict, *, base_dir: Path | None = None, write: Path | None = 
     kit = kit or cdn.get("kit") or compat.CDN["kit"]
     b = s.get("backend") or {}
     backend = (b.get("url") or "").rstrip("/")
+    demo = ""
+    if s.get("demo"):
+        # a pretend backend in the browser: the same pages, working forms, sign-in, plans and account, no server
+        backend = DEMO_URL
+        seed = {"url": DEMO_URL, "site": re.sub(r"[^a-z0-9]+", "-", s["name"].lower()).strip("-"),
+                "plans": b.get("plans") or [{"name": "free", "price_month": 0, "monthly_tokens": 100000, "rpm": 20, "default": True, "description": "Try it out"},
+                                            {"name": "pro", "price_month": 19, "monthly_tokens": 5000000, "rpm": 300, "description": "For real work"}],
+                "collections": [{"name": c["name"], "fields": fields_of(c), "records": c.get("records") or [],
+                                 **{r: c[r] for r in ("list", "view", "create", "update", "delete") if c.get(r) is not None}} for c in b.get("collections") or []]}
+        demo = "<script>window.JADE_DEMO=" + json.dumps(seed).replace("</", "<\\/") + ";</script>\n<script>" + DEMO_JS.read_text() + "</script>"
     site = {**s, "_kit": kit, "_plans": b.get("plans") or [], "_chat_models": [m["name"] for m in b.get("models") or [] if m.get("kind", "chat") == "chat"]}
     css = themes.css(theme, mode=td.get("mode", "auto"), overrides={("--jade-" + k.replace("_", "-") if not k.startswith("--") else k): v for k, v in overrides.items()} or None) + SITE_CSS
     files: dict[str, str] = {}
@@ -108,11 +129,11 @@ def compile_site(s: dict, *, base_dir: Path | None = None, write: Path | None = 
                 sec["_file_spec"] = yaml.safe_load((base_dir / sec["file"]).read_text())
             body.append(sections.REGISTRY[sec["type"]].render(sec, ctx))
         warnings += [f"{page['path']}: {w}" for w in ctx.warnings]
-        files[rel] = document(s, page, "\n".join(body), ctx, css, ui, theme, backend)
+        files[rel] = document(s, page, "\n".join(body), ctx, css, ui, theme, backend, demo)
     if "404.html" not in files:
         nf = {"path": "/404", "title": "Not found", "sections": [{"type": "nav"}, {"type": "hero", "title": "Page not found", "subtitle": "That page does not exist.", "buttons": [{"label": "Home", "href": "/"}]}, {"type": "footer"}]}
         ctx = sections.Context(site=site, page=nf, pages=pages, backend=backend, root="/")
-        files["404.html"] = document(s, nf, "\n".join(sections.REGISTRY[x["type"]].render(x, ctx) for x in nf["sections"]), ctx, css, ui, theme, backend)
+        files["404.html"] = document(s, nf, "\n".join(sections.REGISTRY[x["type"]].render(x, ctx) for x in nf["sections"]), ctx, css, ui, theme, backend, demo)
     url = (s.get("url") or "").rstrip("/")
     if url:
         files["sitemap.xml"] = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
@@ -137,7 +158,7 @@ def compile_site(s: dict, *, base_dir: Path | None = None, write: Path | None = 
     return result
 
 
-def document(s: dict, page: dict, body: str, ctx: sections.Context, css: str, ui: str, theme: dict, backend: str) -> str:
+def document(s: dict, page: dict, body: str, ctx: sections.Context, css: str, ui: str, theme: dict, backend: str, demo: str = "") -> str:
     title = page.get("title") or s["name"]
     full = s["name"] if page["path"] == "/" or title == s["name"] else f"{title} · {s['name']}"
     desc = page.get("description") or s.get("description") or s.get("tagline") or ""
@@ -165,6 +186,7 @@ def document(s: dict, page: dict, body: str, ctx: sections.Context, css: str, ui
 <link rel="icon" href="{E(fav)}">
 {font}
 <style>{css}</style>
+{demo}
 {head}
 </head>
 <body>

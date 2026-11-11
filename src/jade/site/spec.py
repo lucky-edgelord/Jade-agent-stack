@@ -21,7 +21,7 @@ from . import sections, themes
 
 SPEC_NAME = "jade.site.yaml"
 TEMPLATES_DIR = Path(__file__).with_name("templates")
-TOP = {"name", "tagline", "description", "theme", "template", "url", "lang", "logo", "favicon", "cdn", "backend", "pages", "head", "static"}
+TOP = {"demo", "name", "tagline", "description", "theme", "template", "url", "lang", "logo", "favicon", "cdn", "backend", "pages", "head", "static"}
 BACKEND = {"url", "modules", "rate_limits", "auth", "collections", "providers", "models", "plans", "billing"}
 RULES = {"anyone": "", "users": '@request.auth.id != ""', "owner": "@request.auth.id = user", "admin": None}
 FIELD_TYPES = {"text", "email", "url", "number", "bool", "date", "json", "editor", "select", "file", "relation", "textarea", "checkbox"}

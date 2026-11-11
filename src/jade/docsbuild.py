@@ -72,7 +72,7 @@ def _page(title: str, body: str, *, current: str, root: str, tps: list[dict], ex
     th = themes.get("jade")
     side = "".join(f"<h2>{E(g)}</h2><ul>" + "".join(f'<li><a href="{root}{t["topic"]}.html"{" aria-current=page" if t["topic"] == current else ""}>{E(t["title"])}</a></li>' for t in ts) + "</ul>"
                    for g, ts in _groups(tps))
-    side += f'<h2>More</h2><ul><li><a href="{root}examples/"{" aria-current=page" if current == "examples" else ""}>Examples</a></li><li><a href="{root}md/">Markdown (agents)</a></li><li><a href="{root}llms.txt">llms.txt</a></li></ul>'
+    side += f'<h2>More</h2><ul><li><a href="{root}examples/demo/">Live demo</a></li><li><a href="{root}examples/"{" aria-current=page" if current == "examples" else ""}>Examples</a></li><li><a href="{root}md/">Markdown (agents)</a></li><li><a href="{root}llms.txt">llms.txt</a></li></ul>'
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{E(title)} · Jade Agent Stack</title><meta name="description" content="Jade Agent Stack documentation: {E(title)}">
@@ -81,7 +81,7 @@ def _page(title: str, body: str, *, current: str, root: str, tps: list[dict], ex
 <body><a class="skip" href="#main">Skip to content</a>
 <header class="top"><a class="brand" href="{root}index.html">Jade Agent Stack</a>
 <input id="q" type="search" placeholder="Search (/)" aria-label="Search the docs" autocomplete="off"><div id="results" hidden></div>
-<nav aria-label="Project"><a href="{root}start.html">Start</a><a href="{root}agents.html">For agents</a><a href="{root}examples/">Examples</a><a href="{REPO}">GitHub</a></nav></header>
+<nav aria-label="Project"><a href="{root}examples/demo/">Live demo</a><a href="{root}start.html">Start</a><a href="{root}agents.html">For agents</a><a href="{root}examples/">Examples</a><a href="{REPO}">GitHub</a></nav></header>
 <div class="layout"><aside aria-label="Topics">{side}</aside><main id="main">{body}</main></div>
 <footer>Jade Agent Stack {compat.TOOLKIT}. Generated from src/jade/docs. No analytics.</footer>
 <script>const ROOT={json.dumps(root)};{SEARCH_JS}</script>
@@ -126,7 +126,11 @@ jade init && jade doctor
 jade site new "Acme AI" --template saas && jade site build && jade site preview
 ```
 
-People read these pages; agents read [the Markdown](md/) and [llms.txt](llms.txt), or ask `jade docs search`.""")
+People read these pages; agents read [the Markdown](md/) and [llms.txt](llms.txt), or ask `jade docs search`.
+
+**[Try the live demo](examples/demo/)**: a whole AI business (sign-up, plans and checkout, account with usage and API
+keys, a waitlist, a product list, a chat) built from [one YAML file](https://github.com/lucky-edgelord/jade-agent-stack/blob/main/examples/sites/demo/jade.site.yaml),
+with a pretend backend that runs in your browser.""")
     out["docs/index.html"] = _page("Documentation", intro + f'<h2>Topics</h2><div class="cards">{cards}</div>', current="index", root="", tps=tps)
     out["docs/search.json"] = json.dumps(search, separators=(",", ":"))
     out["docs/md/index.md"] = "# Jade Agent Stack docs (Markdown)\n\n" + "\n".join(f"- [{t['title']}]({t['topic']}.md): {t['summary']}" for t in tps) + "\n\n" + FOOT_MD.format(src="") + "\n"
@@ -254,7 +258,7 @@ def examples_page(root: Path, tps: list[dict]) -> str:
                      f'(template {E(s.get("template", "none"))}, theme {E(s.get("theme", "jade") if isinstance(s.get("theme", "jade"), str) else s["theme"].get("name"))})</span></a>')
     pbs = sorted((Path(root) / "examples").glob("*.playbook.yaml"))
     pb_list = "".join(f'<li><a href="{REPO}/blob/main/examples/{p.name}"><code>{E(p.name)}</code></a></li>' for p in pbs)
-    body = markdown.render("# Examples\n\nEach site below is built by `jade site build` from a few lines of `jade.site.yaml` "
+    body = markdown.render("# Examples\n\n**[The live demo](demo/)** has a pretend backend in the browser: sign up, subscribe, make keys, join the waitlist.\n\nEach site below is built by `jade site build` from a few lines of `jade.site.yaml` "
                            "(in `examples/sites/<name>/`). Sites that need a backend show their pages, and their forms and sign-in work once deployed to a Jade Agent Base.")
     body += f'<div class="cards">{"".join(items)}</div><h2>Playbooks</h2><ul>{pb_list}</ul>'
     return _page("Examples", body, current="examples", root="../", tps=tps)

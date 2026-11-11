@@ -19,6 +19,7 @@ backend, the same spec also sets up Jade Agent Base: collections, modules, sign-
 | `name` | string | required | the site name (brand, titles) |
 | `tagline` | string | `""` | one line under the name (hero default) |
 | `description` | string | tagline | meta description |
+| `demo` | bool | `false` | a pretend backend in the browser (see Demo sites) |
 | `template` | string | none | `saas`, `chatbot`, `landing`, `waitlist`, `docs`, `portfolio`, `shop`, `dashboard` |
 | `theme` | string or mapping | `jade` | a theme name, or `{name, mode: auto/light/dark, accent: "#hex", …}` |
 | `url` | URL | none | public address: canonical links, sitemap, Base `appURL` |
@@ -34,6 +35,24 @@ backend, the same spec also sets up Jade Agent Base: collections, modules, sign-
 
 A template supplies pages and backend defaults. Pages in the spec replace the template's page at the same path; backend
 lists (collections, providers, models, plans) merge by `name`. `jade site templates` lists them.
+
+## Demo sites
+
+`demo: true` builds the same pages with a pretend Jade Agent Base inside the browser (localStorage): sign-up and
+sign-in, plans and a simulated checkout (no payment), the account page with usage and API keys, forms that save, and
+record lists (seed them with `records:` on a collection). Chats run scripted replies. Nothing leaves the browser; a bar
+at the top says so and offers a reset. Good for previews, sales demos and GitHub Pages. A demo site cannot be deployed:
+remove `demo: true` and set `backend.url` to run it for real.
+
+```yaml
+name: Nimbus AI
+tagline: Embeddings for your app.
+template: saas
+demo: true
+backend:
+  collections:
+    - {name: models, fields: "title:text!, description:text", list: anyone, records: [{title: nimbus-chat, description: Chat}]}
+```
 
 ## Reusing a design
 
