@@ -214,7 +214,7 @@ def _account(s, ctx):
          replies=Param("object", None, 'demo mode: {"keyword": "reply"}; "*" for anything else'))
 def _chat(s, ctx):
     cid = ctx.uid("chat")
-    mode = g(s, "mode", "gateway" if ctx.backend else "demo")
+    mode = "demo" if ctx.site.get("demo") else g(s, "mode", "gateway" if ctx.backend else "demo")
     attrs = f'id="{cid}" greeting="{E(g(s, "greeting", "How can I help?"))}" suggestions="{E(json.dumps(s.get("suggestions") or []))}" style="height:{E(g(s, "height", "70vh"))}"'
     model = g(s, "model", (ctx.site.get("_chat_models") or [None])[0])
     sysmsg = json.dumps(g(s, "system", f"You are the assistant of {ctx.site['name']}. Be concise and helpful."))
@@ -266,7 +266,7 @@ def _form(s, ctx):
             continue
         else:
             ctl = f'<input name="{E(f["name"])}" type="{E({"text": "text", "email": "email", "number": "number", "url": "url"}.get(ty, "text"))}"{req}>'
-        rows.append(f'<label>{E(f["label"])}{star}{ctl}</label>')
+        rows.append(f'<label><span>{E(f["label"])}{star}</span>{ctl}</label>')
     ctx.scripts.append(f"{{const f=document.getElementById('{fid}');const b=await UI.baseClient();f.addEventListener('submit',async e=>{{e.preventDefault();"
                        "const d={};for(const el of f.elements){if(!el.name)continue;d[el.name]=el.type==='checkbox'?el.checked:el.type==='number'?(el.value===''?null:+el.value):el.value.trim();}"
                        "const st=f.querySelector('.form-status');const btn=f.querySelector('button');btn.disabled=true;"

@@ -1,0 +1,40 @@
+# The live demo: a whole AI business with a pretend backend that runs in the visitor's browser.
+# Sign up with any email, subscribe (no payment), make API keys, join the waitlist, browse models.
+# Remove `demo: true` and add backend.url to run the same site on a real Jade Agent Base.
+name: Nimbus AI
+tagline: Embeddings, chat and search for your app, billed by the token.
+demo: true
+template: saas
+theme: ocean
+backend:
+  plans:
+    - {name: free, price_month: 0, monthly_tokens: 200000, rpm: 20, default: true, description: Try it out}
+    - {name: pro, price_month: 19, monthly_tokens: 20000000, rpm: 300, description: For production apps}
+    - {name: team, price_month: 99, monthly_tokens: 150000000, rpm: 1200, description: For teams with many apps}
+  collections:
+    - {name: waitlist, fields: "email:email!, company:text", create: anyone, list: admin}
+    - name: models
+      fields: "title:text!, description:text, price:text"
+      list: anyone
+      view: anyone
+      records:
+        - {title: nimbus-chat, description: "A strong general model for chat and tools.", price: "$0.20 / 1M in"}
+        - {title: nimbus-embed, description: "Small, fast embeddings for search.", price: "$0.02 / 1M"}
+        - {title: nimbus-decide, description: "Classify and route in milliseconds.", price: "$0.05 / 1M"}
+pages:
+  - path: /
+    title: Home
+    sections:
+      - nav
+      - {type: hero, eyebrow: "Live demo", buttons: [{label: Create an account, href: /account}, {label: See pricing, href: /pricing}]}
+      - type: features
+        title: Everything an AI app needs
+        items:
+          - {icon: "⚡", title: One API, text: "OpenAI and Ollama compatible endpoints."}
+          - {icon: "🔑", title: Keys and limits, text: "Per-user API keys with monthly caps."}
+          - {icon: "💳", title: Billing built in, text: "Plans, checkout and the customer portal."}
+      - {type: records, title: Models, collection: models, text_field: description, price_field: price, sort: title}
+      - {type: chat, title: Try it, height: 380px, suggestions: ["What is this site?", "How do I deploy it?"], replies: {"what": "A demo of a site built by Jade Agent Stack from one YAML file. The backend is pretend and runs in your browser.", "deploy": "Remove demo: true, point backend.url at a Jade Agent Base, then run jade site deploy.", "*": "On a real deployment this chat talks to the gateway's models. Here it is scripted."}}
+      - {type: form, id: waitlist, title: Get early access to Nimbus Vision, collection: waitlist, fields: ["email:email!", "company:text"], submit: Join the waitlist, success: "You're on the list (in this browser)."}
+      - {type: cta, title: Start building today, text: "The free plan needs no card.", button: {label: Create an account, href: /account}}
+      - {type: footer, links: [{label: Docs, href: "https://lucky-edgelord.github.io/jade-agent-stack/"}, {label: How this was built, href: "https://github.com/lucky-edgelord/jade-agent-stack/blob/main/examples/sites/demo/jade.site.yaml"}]}

@@ -63,6 +63,8 @@ def secrets_from_env(s: dict) -> dict:
 
 def playbook(s: dict, files: dict[str, str], *, static_dir: Path | None = None, name: str | None = None) -> Playbook:
     """the deploy playbook for an expanded spec and its compiled files"""
+    if s.get("demo"):
+        raise SiteError("this is a demo site (demo: true): its backend is pretend, in the browser. Remove demo: true to deploy it to a Jade Agent Base")
     b = s.get("backend") or {}
     tasks: list[dict] = []
     scopes = {"read", "site"}

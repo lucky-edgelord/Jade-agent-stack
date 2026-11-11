@@ -240,6 +240,41 @@ class SiteTests(unittest.TestCase):
         self.assertIn("OLLAMA_API_KEY", out)
 
 
+class DemoSiteTests(unittest.TestCase):
+    def setUp(self):
+        self.d = isolate(self)
+
+    def test_demo_builds_and_cannot_deploy(self):
+        from jade.site.spec import Site
+        s = Site.load(ROOT / "examples/sites/demo")
+        r = s.build(self.d / "demo")
+        html = (self.d / "demo/index.html").read_text()
+        self.assertIn("window.JADE_DEMO", html)
+        self.assertIn('<meta name="jade-base" content="https://demo.jade.invalid">', html)
+        self.assertIn("nimbus-chat", html)  # seed records travel with the page
+        self.assertNotIn("<script>window.JADE_DEMO", (self.d / "demo/robots.txt").read_text())
+        os.chdir(ROOT / "examples/sites/demo")
+        code, out, err = jade("site", "plan", "--json")
+        self.assertEqual(code, 1)
+        self.assertIn("demo site", out)
+
+    @unittest.skipUnless(__import__("shutil").which("node") and (ROOT.parent / "jade-agent-ui-ux/dist/jade-ui.js").exists()
+                         and (ROOT.parent / "jade-agent-ui-ux/node_modules/playwright").exists(), "needs node, Playwright and ../jade-agent-ui-ux/dist")
+    def test_demo_in_a_browser(self):
+        import subprocess
+        from helpers import REAL_HOME
+        from jade.site.spec import Site
+        Site.load(ROOT / "examples/sites/demo").build(self.d / "demo")
+        env = {**os.environ, "PLAYWRIGHT_BROWSERS_PATH": os.environ.get("PLAYWRIGHT_BROWSERS_PATH") or str(Path(REAL_HOME) / ".cache" / "ms-playwright")}
+        p = subprocess.run(["node", str(ROOT / "tests/browser_demo.mjs"), str(self.d / "demo"), str(ROOT.parent / "jade-agent-ui-ux/dist")], capture_output=True, text=True, timeout=180, env=env)
+        self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+        r = json.loads(p.stdout.strip().splitlines()[-1])
+        self.assertEqual(r["models"], ["nimbus-chat", "nimbus-decide", "nimbus-embed"])
+        for k in ("banner", "waitlist", "chat", "account_free", "account_pro", "key", "reset"):
+            self.assertTrue(r[k], k)
+        self.assertEqual(r["errors"], [])
+
+
 class DocsTests(unittest.TestCase):
     def test_browser(self):
         from jade import docs

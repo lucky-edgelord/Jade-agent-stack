@@ -54,3 +54,4 @@ jobs:
         run: |
           ln -s "$GITHUB_WORKSPACE/jade-agent-ui-ux" ../jade-agent-ui-ux
           python -m unittest discover -s tests -p "test_base_e2e.py" -v
+          python -m unittest discover -s tests -p "test_playbook_site.py" -k Demo -v

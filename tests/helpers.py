@@ -14,6 +14,7 @@ from urllib.parse import parse_qs, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 TOKEN = "jab_test_SECRET_token_0123456789"
+REAL_HOME = os.environ.get("HOME", "")  # before isolate() swaps it (Playwright keeps its browsers under it)
 
 
 def isolate(tc) -> Path:

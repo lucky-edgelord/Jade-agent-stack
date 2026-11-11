@@ -67,13 +67,14 @@ h1,h2,h3{line-height:1.2;letter-spacing:-.01em;margin:0 0 .4em}h1{font-size:clam
 jade-chat{display:block;border:1px solid var(--jade-border);border-radius:var(--jade-radius,10px);overflow:hidden}
 </style>
 
+
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="nav"><div class="wrap nav-in"><a class="brand" href="../">Mara Lind</a><button class="menu" aria-label="Menu" aria-expanded="false" onclick="this.parentNode.classList.toggle('open');this.setAttribute('aria-expanded',this.parentNode.classList.contains('open'))">☰</button><nav aria-label="Main"><a href="../work/">Work</a><a href="../contact/" aria-current=page>Contact</a></nav><div class="nav-end"><jade-theme-toggle></jade-theme-toggle></div></div></header>
 <main id="main">
 
-<section class="sec form-sec "><div class="wrap"><header class="sec-head"><h2>Say hello</h2></header><form id="form1" class="card form narrow"><label>Name<span class="req" aria-hidden="true">*</span><input name="name" type="text" required></label><label>Email<span class="req" aria-hidden="true">*</span><input name="email" type="email" required></label><label>Message<span class="req" aria-hidden="true">*</span><textarea name="message" rows="4" required></textarea></label><div class="form-status" role="status"></div><button class="btn primary" type="submit">Send</button></form></div></section>
+<section class="sec form-sec "><div class="wrap"><header class="sec-head"><h2>Say hello</h2></header><form id="form1" class="card form narrow"><label><span>Name<span class="req" aria-hidden="true">*</span></span><input name="name" type="text" required></label><label><span>Email<span class="req" aria-hidden="true">*</span></span><input name="email" type="email" required></label><label><span>Message<span class="req" aria-hidden="true">*</span></span><textarea name="message" rows="4" required></textarea></label><div class="form-status" role="status"></div><button class="btn primary" type="submit">Send</button></form></div></section>
 
 </main>
 <footer class="foot"><div class="wrap foot-in"><p>© Mara Lind</p><nav aria-label="Footer"></nav></div></footer>
