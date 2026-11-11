@@ -1,0 +1,32 @@
+# Jade Agent Stack
+
+> A Python client, CLI, wizard, harness, playbook runner and site compiler for Jade Vault, Jade Agent Base, Jade Agent Kit and Jade Agent UI/UX.
+
+Version 0.1.0. Install: `pip install jade-agent-stack`. Every command: `jade commands --json`. Search: `jade docs search <words>`.
+
+## Docs
+
+- [Quick start](https://lucky-edgelord.github.io/jade-agent-stack/md/start.md): Install, connect, check, then build a site or run a playbook.
+- [For agents](https://lucky-edgelord.github.io/jade-agent-stack/md/agents.md): The shortest paths to a working site or backend, in the fewest tokens.
+- [Sites](https://lucky-edgelord.github.io/jade-agent-stack/md/sites.md): The site spec, templates, themes, building, previewing and deploying to Jade Agent Base.
+- [Playbooks](https://lucky-edgelord.github.io/jade-agent-stack/md/playbooks.md): Portable YAML automation over Vault, Base, Kit and local commands; check, plan, run, approve.
+- [Harness, approvals and credentials](https://lucky-edgelord.github.io/jade-agent-stack/md/harness.md): How every call is checked before it leaves: approvals, idempotency keys, task credentials, compatibility.
+- [Python API](https://lucky-edgelord.github.io/jade-agent-stack/md/python.md): The SDK: Stack, Harness, Site, playbooks, docs, and asyncio wrappers.
+- [CLI, REPL, MCP and HTTP](https://lucky-edgelord.github.io/jade-agent-stack/md/surfaces.md): The same commands on every surface, with the same JSON payloads.
+- [Configuration and secrets](https://lucky-edgelord.github.io/jade-agent-stack/md/config.md): jade.config.yaml keys, discovery, the OS keyring, and the init wizard.
+- [Architecture](https://lucky-edgelord.github.io/jade-agent-stack/md/architecture.md): The five parts, who owns what, and the contract between Vault and Base.
+- [Security](https://lucky-edgelord.github.io/jade-agent-stack/md/security.md): The threat model across Vault, Base, Kit, UI/UX and the toolkit, and what each defence covers.
+- [Commands](https://lucky-edgelord.github.io/jade-agent-stack/md/commands.md): Every command and its parameters, generated from the code.
+- [Errors](https://lucky-edgelord.github.io/jade-agent-stack/md/errors.md): Every error code, its meaning, exit code and remediation.
+- [Section reference](https://lucky-edgelord.github.io/jade-agent-stack/md/sections.md): Every page section and its parameters.
+- [Themes](https://lucky-edgelord.github.io/jade-agent-stack/md/themes.md): The themes for sites and pages.
+- [Playbook schema](https://lucky-edgelord.github.io/jade-agent-stack/md/playbook-schema.md): The JSON Schema of playbooks.
+- [Stack versions](https://lucky-edgelord.github.io/jade-agent-stack/md/versions.md): Which versions of the four repositories this toolkit works with.
+
+## Reference
+
+- Config: `jade.config.yaml` (upward from cwd, or $JADE_CONFIG); secrets in the OS keyring as `jade.<host>`.
+- Output: `--json` gives {"schema": "jade.v1", "ok": bool, "data" | "error": {code, message, remediation}}.
+- Exit codes: 0 ok, 1 user error, 2 remote error, 3 refused for safety.
+- Site spec: `jade.site.yaml`; templates: chatbot, dashboard, docs, landing, portfolio, saas, shop, waitlist.
+- Playbooks: `*.playbook.yaml`, apiVersion jade/v1, schema/playbook.v1.json.

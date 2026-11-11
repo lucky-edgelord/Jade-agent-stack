@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Showcase</title>
+<meta name="description" content="Every section of the Jade site compiler on one page.">
+<meta property="og:title" content="Showcase">
+<meta property="og:description" content="Every section of the Jade site compiler on one page.">
+<meta property="og:type" content="website">
+<meta name="generator" content="Jade Agent Stack 0.1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230b7a5b%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2244%22%20font-family%3D%22system-ui%2Csans-serif%22%20font-size%3D%2236%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;display=swap">
+<style>:root{--jade-radius:14px;--jade-font:"Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--jade-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--jade-space:8px;--jade-font-size:16px;--jade-shadow:0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);--jade-focus:var(--jade-accent);--jade-bg:#f7f5ff;--jade-fg:#1a1530;--jade-accent:#7c3aed;--jade-accent-fg:#ffffff;--jade-surface:#fdfcff;--jade-surface-2:#eceaf5;--jade-muted:#777387;--jade-border:#dad8e4;--jade-user:#e8dffd;--jade-user-fg:#1a1530;--jade-code:#efedf8;--jade-ok:#1f8a5b;--jade-warn:#a8650f;--jade-danger:#c0392b;--jade-syn-k:#5d2cb2;--jade-syn-s:#9a3f1c;--jade-syn-n:#7a4bb3;--jade-syn-c:#7d7a8d;color-scheme:light}@media (prefers-color-scheme:dark){:root:not([data-jade-mode=light]){--jade-radius:14px;--jade-font:"Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--jade-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--jade-space:8px;--jade-font-size:16px;--jade-shadow:0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);--jade-focus:var(--jade-accent);--jade-bg:#0a0714;--jade-fg:#ece8ff;--jade-accent:#22d3ee;--jade-accent-fg:#0b0b0b;--jade-surface:#13101d;--jade-surface-2:#1e1b29;--jade-muted:#8d8a9c;--jade-border:#2e2b3a;--jade-user:#0e2c3b;--jade-user-fg:#ece8ff;--jade-code:#181422;--jade-ok:#1f8a5b;--jade-warn:#a8650f;--jade-danger:#c0392b;--jade-syn-k:#64e0f3;--jade-syn-s:#f0a47e;--jade-syn-n:#c8a4f0;--jade-syn-c:#868395;color-scheme:dark}}:root[data-jade-mode=dark]{--jade-radius:14px;--jade-font:"Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;--jade-mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--jade-space:8px;--jade-font-size:16px;--jade-shadow:0 1px 2px rgb(0 0 0 / .06), 0 8px 24px rgb(0 0 0 / .06);--jade-focus:var(--jade-accent);--jade-bg:#0a0714;--jade-fg:#ece8ff;--jade-accent:#22d3ee;--jade-accent-fg:#0b0b0b;--jade-surface:#13101d;--jade-surface-2:#1e1b29;--jade-muted:#8d8a9c;--jade-border:#2e2b3a;--jade-user:#0e2c3b;--jade-user-fg:#ece8ff;--jade-code:#181422;--jade-ok:#1f8a5b;--jade-warn:#a8650f;--jade-danger:#c0392b;--jade-syn-k:#64e0f3;--jade-syn-s:#f0a47e;--jade-syn-n:#c8a4f0;--jade-syn-c:#868395;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--jade-bg);color:var(--jade-fg);font:16px/1.6 var(--jade-font,system-ui,sans-serif);-webkit-font-smoothing:antialiased}
+a{color:var(--jade-accent)}img{max-width:100%;height:auto}
+h1,h2,h3{line-height:1.2;letter-spacing:-.01em;margin:0 0 .4em}h1{font-size:clamp(2.1rem,5vw,3.6rem)}h2{font-size:clamp(1.5rem,3vw,2.2rem)}h3{font-size:1.1rem}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;z-index:99;background:var(--jade-bg);padding:8px 12px;border-radius:8px}
+:focus-visible{outline:2px solid var(--jade-accent);outline-offset:2px}
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--jade-bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--jade-border)}
+.nav-in{display:flex;align-items:center;gap:20px;min-height:62px}
+.brand{font-weight:700;font-size:1.1rem;color:var(--jade-fg);text-decoration:none;display:flex;align-items:center;gap:8px}.brand .logo{height:28px;width:auto}
+.nav nav{display:flex;gap:4px;flex:1}.nav nav a{color:var(--jade-muted);text-decoration:none;padding:6px 10px;border-radius:8px}
+.nav nav a:hover,.nav nav a[aria-current]{color:var(--jade-fg);background:var(--jade-surface-2)}
+.nav-end{display:flex;align-items:center;gap:10px}.menu{display:none;background:none;border:0;font-size:1.4rem;color:var(--jade-fg);cursor:pointer}
+@media (max-width:760px){.menu{display:block;margin-left:auto}.nav nav{display:none;position:absolute;top:62px;left:0;right:0;flex-direction:column;background:var(--jade-bg);padding:10px 20px;border-bottom:1px solid var(--jade-border)}
+.nav-in.open nav{display:flex}.nav-end{display:none}.nav-in.open .nav-end{display:flex;position:absolute;top:calc(62px + var(--n,170px));left:20px}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:var(--jade-radius,10px);border:1px solid var(--jade-border);
+ background:var(--jade-surface);color:var(--jade-fg);font:inherit;font-weight:600;text-decoration:none;cursor:pointer;transition:transform .1s ease,background .15s}
+.btn:hover{transform:translateY(-1px)}.btn.primary{background:var(--jade-accent);border-color:var(--jade-accent);color:var(--jade-accent-fg)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.sec{padding:72px 0}.sec+.sec{padding-top:24px}.sec-head{max-width:680px;margin:0 auto 32px;text-align:center}
+.lead{font-size:1.15rem;color:var(--jade-muted);margin:0}
+.hero{padding:96px 0 64px;text-align:center}.hero .lead{max-width:640px;margin:0 auto}.hero .btns{justify-content:center}
+.hero.left{text-align:left}.hero.left .lead{margin:0}.hero.left .btns{justify-content:flex-start}
+.eyebrow{display:inline-block;font-size:.85rem;font-weight:600;color:var(--jade-accent);background:color-mix(in srgb,var(--jade-accent) 12%,transparent);padding:4px 12px;border-radius:999px;margin:0 0 16px}
+.hero-img{display:block;margin:48px auto 0;border-radius:calc(var(--jade-radius,10px)*1.4);border:1px solid var(--jade-border);box-shadow:0 30px 80px rgb(0 0 0/.15)}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr))}
+@media (max-width:900px){.grid{grid-template-columns:repeat(min(var(--cols,3),2),minmax(0,1fr))}}@media (max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:var(--jade-surface);border:1px solid var(--jade-border);border-radius:var(--jade-radius,10px);padding:22px}
+.feat .icon{font-size:1.6rem;width:44px;height:44px;display:grid;place-items:center;border-radius:10px;background:var(--jade-surface-2);margin-bottom:12px}
+.feat p,.steps p{color:var(--jade-muted);margin:0}
+.steps{list-style:none;padding:0;margin:0}.steps .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--jade-accent);color:var(--jade-accent-fg);font-weight:700;margin-bottom:10px}
+.stats{text-align:center}.stat .v{font-size:2.4rem;font-weight:800;color:var(--jade-accent)}.stat .k{color:var(--jade-muted)}
+.plan{display:flex;flex-direction:column;gap:10px}.plan .price{font-size:2rem;font-weight:800}.plan .price small{font-size:.9rem;font-weight:500;color:var(--jade-muted)}
+.plan ul{padding-left:18px;margin:0 0 8px;flex:1;color:var(--jade-muted)}
+.narrow{max-width:680px;margin:0 auto}
+.faq details{margin-bottom:10px}.faq summary{cursor:pointer;font-weight:600}.faq .md{margin-top:10px;color:var(--jade-muted)}
+.cta .wrap{background:var(--jade-accent);color:var(--jade-accent-fg);border-radius:calc(var(--jade-radius,10px)*1.6);padding:56px 28px;text-align:center}
+.cta .lead{color:inherit;opacity:.9}.cta .btns{justify-content:center}.cta .btn.primary{background:var(--jade-accent-fg);color:var(--jade-accent);border-color:transparent}
+.form{display:grid;gap:14px}.form label{display:grid;gap:6px;font-weight:600;font-size:.95rem}.form .req{color:var(--jade-danger,#c0392b);margin-left:2px}
+.form input,.form textarea,.keyform input{font:inherit;padding:10px 12px;border-radius:calc(var(--jade-radius,10px)*.7);border:1px solid var(--jade-border);background:var(--jade-bg);color:var(--jade-fg)}
+.form .check{display:flex;align-items:center;gap:8px;font-weight:500}.form-status:empty{display:none}.form-status.ok{color:var(--jade-ok,#1f8a5b)}.form-status.err{color:var(--jade-danger,#c0392b)}
+.keyform{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:14px}.keyform label{display:grid;gap:4px;flex:1;min-width:220px}
+.rec img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;margin-bottom:10px}.rec p{color:var(--jade-muted);margin:0}.price-sm{font-weight:700;margin-top:8px}
+.skel{min-height:140px;background:linear-gradient(90deg,var(--jade-surface),var(--jade-surface-2),var(--jade-surface));background-size:200% 100%;animation:sk 1.2s infinite}@keyframes sk{to{background-position:-200% 0}}
+.gallery figure{margin:0;padding:10px}.gallery img{width:100%;border-radius:8px}.gallery figcaption{color:var(--jade-muted);font-size:.9rem;margin-top:6px}
+.md pre{background:var(--jade-code,var(--jade-surface-2));padding:14px;border-radius:8px;overflow:auto}.md code{font-family:ui-monospace,monospace;font-size:.92em}
+.md .table{overflow-x:auto}.md table{border-collapse:collapse}.md th,.md td{border:1px solid var(--jade-border);padding:6px 10px}
+.muted{color:var(--jade-muted)}
+.foot{border-top:1px solid var(--jade-border);padding:28px 0;margin-top:48px;color:var(--jade-muted);font-size:.92rem}
+.foot-in{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}.foot p{margin:0}.foot nav{display:flex;gap:16px}.foot a{color:inherit}
+jade-chat{display:block;border:1px solid var(--jade-border);border-radius:var(--jade-radius,10px);overflow:hidden}
+</style>
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap nav-in"><a class="brand" href="./">Showcase</a><button class="menu" aria-label="Menu" aria-expanded="false" onclick="this.parentNode.classList.toggle('open');this.setAttribute('aria-expanded',this.parentNode.classList.contains('open'))">☰</button><nav aria-label="Main"></nav><div class="nav-end"><jade-theme-toggle></jade-theme-toggle><a class="btn primary" href="https://github.com/lucky-edgelord/jade-agent-stack">GitHub</a></div></div></header>
+<main id="main">
+
+<section class="sec hero  "><div class="wrap"><p class="eyebrow">Demo</p><h1>One file, a whole site</h1><p class="lead">This page is 60 lines of YAML. Switch the theme at the top right.</p><div class=btns><a class="btn primary" href="#features">See the sections</a><a class="btn" href="#chat">Try the chat</a></div></div></section>
+<section class="sec stats-sec "><div class="wrap"><div class="grid stats" style="--cols:4"><div class="stat"><div class="v">19</div><div class="k">sections</div></div><div class="stat"><div class="v">12</div><div class="k">themes</div></div><div class="stat"><div class="v">8</div><div class="k">templates</div></div><div class="stat"><div class="v">0</div><div class="k">build tools</div></div></div></div></section>
+<section class="sec features " id="features"><div class="wrap"><header class="sec-head"><h2>Sections</h2></header><div class="grid" style="--cols:3"><div class="card feat"><div class=icon aria-hidden=true>🧱</div><h3>Layout</h3><p>nav, hero, features, steps, stats, cta, footer.</p></div><div class="card feat"><div class=icon aria-hidden=true>💬</div><h3>AI</h3><p>chat (gateway, Ollama Cloud or demo), and surfaces agents build.</p></div><div class="card feat"><div class=icon aria-hidden=true>🗄️</div><h3>Backend</h3><p>form, records, auth, account and pricing, with Jade Agent Base.</p></div></div></div></section>
+<section class="sec steps-sec "><div class="wrap"><header class="sec-head"><h2>How it works</h2></header><ol class="steps grid" style="--cols:3"><li class="card"><span class="num">1</span><h3>Write the spec</h3><p>name, tagline, template.</p></li><li class="card"><span class="num">2</span><h3>Build</h3><p>jade site build</p></li><li class="card"><span class="num">3</span><h3>Deploy</h3><p>jade site deploy</p></li></ol></div></section>
+<section class="sec chat-sec " id="chat"><div class="wrap"><header class="sec-head"><h2>A chat (demo mode)</h2></header><jade-chat id="chat1" greeting="How can I help?" suggestions="[&quot;What is this?&quot;, &quot;How do I deploy?&quot;]" style="height:420px"></jade-chat></div></section>
+<section class="sec surface-sec "><div class="wrap"><header class="sec-head"><h2>A surface (UI an agent can build)</h2></header><jade-surface id="surf2" name="surf2"></jade-surface></div></section>
+<section class="sec code-sec "><div class="wrap"><header class="sec-head"><h2>The spec of a site</h2></header><div class="narrow"><jade-code lang="yaml">name: Acme AI
+tagline: Embeddings for every app.
+template: saas</jade-code></div></div></section>
+<section class="sec faq-sec "><div class="wrap"><header class="sec-head"><h2>Questions</h2></header><div class="faq narrow"><details class="card"><summary>Does it need Node or a bundler?</summary><div class="md"><p>No. The compiler is Python with one dependency; pages load the UI components from a CDN.</p></div></details><details class="card"><summary>Can agents use it?</summary><div class="md"><p>Yes: <code>jade mcp</code>, <code>jade repl --jsonl</code>, <code>jade serve</code> or <code>import jade</code>.</p></div></details></div></div></section>
+<section class="sec cta "><div class="wrap"><h2>Make one</h2><p class=lead>pip install jade-agent-stack</p><div class="btns"><a class="btn primary" href="https://lucky-edgelord.github.io/jade-agent-stack/">Read the docs</a></div></div></section>
+
+</main>
+<footer class="foot"><div class="wrap foot-in"><p>© Showcase</p><nav aria-label="Footer"><a href="https://lucky-edgelord.github.io/jade-agent-stack/">Docs</a><a href="https://github.com/lucky-edgelord/jade-agent-stack">GitHub</a></nav></div></footer>
+<script type="module">
+import * as UI from "https://cdn.jsdelivr.net/gh/lucky-edgelord/Jade-agent-ui-ux@v1.2.0/dist/jade-ui.js";
+window.UI = UI;
+(async () => {
+  try{{const c=document.getElementById('chat1');await customElements.whenDefined('jade-chat');const R={"what": "A page built by the Jade Agent Stack site compiler from one YAML file.", "deploy": "Run jade site plan to see every call, then jade site deploy.", "*": "Connect a Jade Agent Base and this chat talks to a real model."};c.handler=async(t,r)=>{const k=Object.keys(R).find(k=>k!=='*'&&t.toLowerCase().includes(k.toLowerCase()));const a=R[k]??R['*']??'…';for(const w of a.match(/\S+\s*/g)||[]){r.append(w);await new Promise(x=>setTimeout(x,25));}};}}catch(e){console.error('[jade site]',e)}
+  try{{const el=document.getElementById('surf2');await customElements.whenDefined('jade-surface');await el.render({"root": "r", "data": {"plans": [{"label": "Free", "value": 620}, {"label": "Pro", "value": 210}, {"label": "Team", "value": 45}], "qty": 3}, "components": [{"id": "r", "component": "Grid", "props": {"columns": 2}, "children": ["c1", "c2"]}, {"id": "c1", "component": "Card", "props": {"title": "Users by plan"}, "children": ["d"]}, {"id": "d", "component": "Chart", "props": {"type": "donut", "data": {"$data": "/plans"}, "centerLabel": "users"}}, {"id": "c2", "component": "Card", "props": {"title": "A calculator"}, "children": ["s", "t"]}, {"id": "s", "component": "Slider", "props": {"label": "Seats", "bind": "/qty", "min": 1, "max": 20}}, {"id": "t", "component": "Text", "props": {"text": "You picked **{{/qty}}** seats."}}]});}}catch(e){console.error('[jade site]',e)}
+})();
+</script>
+</body>
+</html>

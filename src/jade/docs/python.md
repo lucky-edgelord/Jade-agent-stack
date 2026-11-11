@@ -1,0 +1,68 @@
+---
+title: "Python API"
+summary: "The SDK: Stack, Harness, Site, playbooks, docs, and asyncio wrappers."
+tags: [python, sdk, api]
+applies_to: stack
+audience: both
+since: 0.1.0
+order: 40
+---
+# Python API
+
+```python
+import jade
+stack = jade.Stack.load()                       # jade.config.yaml upward from here, or $JADE_CONFIG
+```
+
+## Stack
+
+| Member | Returns | Raises |
+| --- | --- | --- |
+| `Stack.load(path=None, *, yolo=False, accept_legacy=False, ask=None)` | `Stack` | `JadeError` (JADE400 bad config) |
+| `stack.doctor()` | `{"ok", "targets", "problems"}` | never for target problems; they are in the result |
+| `stack.call(target, tool, args=None, *, idempotency_key=None, timeout=None)` | the tool's result | `SafetyError` (JADE30x), `RemoteError` (JADE2xx), `AuthError` (JADE101) |
+| `stack.base` | `BaseClient`: `tools(format)`, `call(name, args, idempotency_key=)`, `mint(task, scopes, ttl)`, `audit()` | as above |
+| `stack.vault` | `VaultClient`: `status()`, `chat(message, session=)`, `flow(name, input)`, `flows()` | JADE102 if Vault accepts URL tokens |
+| `stack.kit.page(features, ollama=, model=, out=)` | `{"html", "manifest"}` | JADE400 unknown feature |
+| `stack.ui.chat(mount=, theme=, base=, out=)` | `{"html"}` | JADE400 unknown mount |
+| `stack.agent(name, target="vault"\|"base")` | `Agent`: `ask(text)`, `stream(text)` | as `call` |
+| `stack.run(command, **args)` | any command's result (`jade commands`) | `JadeError` |
+
+```python
+stack = jade.Stack.load()
+print(stack.call("base", "records_list", {"collection": "posts"}))
+```
+
+## Site
+
+```python
+site = jade.Site("Acme", tagline="Hi", template="landing")
+site.page("/about", "About").add("nav").add("markdown", text="# About").add("footer")
+result = site.build("dist")                      # {"out", "pages", "files", "bytes", "warnings"}
+```
+
+## Playbooks
+
+```python
+pb = jade.playbook.load("examples/base-products.playbook.yaml")
+pb.check(stack.harness); plan = pb.plan({"collection": "items"})
+for event in pb.run(stack.harness, {"collection": "items"}): print(event["event"])
+```
+
+## Docs
+
+```python
+jade.docs.topics(); jade.docs.show("playbooks#targets"); jade.docs.search("credential")
+```
+
+## asyncio
+
+```python
+stack = await jade.aio.Stack.load()
+reply = await stack.agent("booker", target="base").ask("how many products?")
+```
+
+## Errors
+
+All errors derive from `jade.JadeError` with `.code`, `.message`, `.remediation`, `.exit_code`; `str(e)` includes the
+remediation and never a secret. See `jade docs show errors`.

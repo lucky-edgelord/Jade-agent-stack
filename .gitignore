@@ -1,4 +1,6 @@
 __pycache__/
 *.pyc
-/build/
+/build/lib/
 /dist/
+*.egg-info/
+.venv/

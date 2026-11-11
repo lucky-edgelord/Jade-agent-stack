@@ -1,0 +1,56 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e .
+      - run: jade --help
+      - run: python build/build.py --check
+      - run: python build/build.py --report
+      - run: python -m unittest discover -s tests -v
+  end-to-end:
+    # against a real Jade Agent Base (built from source) and the UI/UX build, in Chromium
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: lucky-edgelord/jade-agent-base
+          path: jade-agent-base
+      - uses: actions/checkout@v4
+        with:
+          repository: lucky-edgelord/Jade-agent-ui-ux
+          path: jade-agent-ui-ux
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: jade-agent-base/go.mod
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: pip install -e .
+      - name: UI/UX build and Chromium
+        working-directory: jade-agent-ui-ux
+        run: |
+          npm install --no-audit --no-fund
+          node scripts/build.mjs
+          npx playwright install chromium
+      - name: End-to-end tests
+        env:
+          JAB_DIR: ${{ github.workspace }}/jade-agent-base
+          PLAYWRIGHT_DIR: ${{ github.workspace }}/jade-agent-ui-ux/node_modules/playwright
+        run: |
+          ln -s "$GITHUB_WORKSPACE/jade-agent-ui-ux" ../jade-agent-ui-ux
+          python -m unittest discover -s tests -p "test_base_e2e.py" -v

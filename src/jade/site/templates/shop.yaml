@@ -1,0 +1,19 @@
+about: "A small shop: products listed from the backend, accounts, and a support chat widget."
+theme: rose
+backend:
+  rate_limits: true
+  collections:
+    - {name: products, fields: "title:text!, description:text, price:number, image:file", list: anyone, view: anyone}
+    - {name: orders, fields: "items:json!, note:text", create: users, list: owner, view: owner}
+pages:
+  - path: /
+    title: Shop
+    sections:
+      - nav
+      - {type: hero, buttons: [{label: Browse, href: "#products"}]}
+      - {type: records, id: products, title: Products, collection: products, title_field: title, text_field: description, price_field: price, image_field: image, sort: title}
+      - {type: html, html: '<jade-chat-widget title="Questions?" greeting="Hi! Ask us anything about our products."></jade-chat-widget>'}
+      - footer
+  - path: /account
+    title: Account
+    sections: [nav, account, footer]

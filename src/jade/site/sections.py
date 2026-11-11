@@ -291,11 +291,11 @@ def parse_field(f) -> dict:
          collection=Param("string", None, "collection name (its list rule must allow the visitor)", True), title=Param("string", None, "heading"),
          title_field=Param("string", "title", "field shown as the card title"), text_field=Param("string", None, "field shown as text"),
          image_field=Param("string", None, "file field shown as the image"), price_field=Param("string", None, "field shown as a price"),
-         filter=Param("string", None, "PocketBase filter"), sort=Param("string", "-created", "sort"), limit=Param("int", 12, "how many"),
+         filter=Param("string", None, "PocketBase filter"), sort=Param("string", None, "sort, e.g. title or -price (-created needs a created field)"), limit=Param("int", 12, "how many"),
          empty=Param("string", "Nothing here yet.", "shown when there are none"))
 def _records(s, ctx):
     rid = ctx.uid("rec")
-    cfg = json.dumps({k: s.get(k) for k in ("collection", "title_field", "text_field", "image_field", "price_field", "filter", "sort", "limit", "empty")} | {"title_field": g(s, "title_field", "title"), "sort": g(s, "sort", "-created"), "limit": g(s, "limit", 12), "empty": g(s, "empty", "Nothing here yet.")})
+    cfg = json.dumps({k: s.get(k) for k in ("collection", "title_field", "text_field", "image_field", "price_field", "filter", "sort", "limit", "empty")} | {"title_field": g(s, "title_field", "title"), "sort": g(s, "sort", None), "limit": g(s, "limit", 12), "empty": g(s, "empty", "Nothing here yet.")})
     ctx.scripts.append(f"{{const el=document.getElementById('{rid}');const c={cfg};const b=await UI.baseClient();const esc=s=>String(s??'').replace(/[&<>\"']/g,x=>({{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}})[x]);"
                        "try{const r=await b.fetch('/api/collections/'+c.collection+'/records',{query:{filter:c.filter,sort:c.sort,perPage:c.limit},auth:b.signedIn});"
                        "el.innerHTML=r.items.length?r.items.map(x=>`<div class=\"card rec\">${c.image_field&&x[c.image_field]?`<img src=\"${b.url}/api/files/${x.collectionId}/${x.id}/${encodeURIComponent([].concat(x[c.image_field])[0])}\" alt=\"\" loading=lazy>`:''}"
@@ -339,11 +339,15 @@ def _code(s, ctx):
 
 
 @section("surface", "UI from a Jade surface spec (components, data, actions), e.g. a calculator, a dashboard or a quiz.",
-         title=Param("string", None, "heading"), spec=Param("object", {}, "a surface spec: {root, components, data} (see `jade docs surfaces`)", True),
+         title=Param("string", None, "heading"), spec=Param("object", {}, "a surface spec: {root, components, data} (see the UI/UX catalog)"),
+         file=Param("string", None, "a saved surface spec (YAML or JSON), relative to jade.site.yaml: reuse a design instead of rebuilding it"),
          name=Param("string", None, "surface name (for agents and actions)"))
 def _surface(s, ctx):
     sid = ctx.uid("surf")
-    ctx.scripts.append(f"{{const el=document.getElementById('{sid}');await customElements.whenDefined('jade-surface');await el.render({json.dumps(s.get('spec') or {})});}}")
+    spec = s.get("spec") or s.get("_file_spec") or {}
+    if not spec:
+        ctx.warnings.append("surface: no spec (spec or file)")
+    ctx.scripts.append(f"{{const el=document.getElementById('{sid}');await customElements.whenDefined('jade-surface');await el.render({json.dumps(spec)});}}")
     return wrap(s, head(s.get("title")) + f'<jade-surface id="{sid}" name="{E(g(s, "name", sid))}"></jade-surface>', "surface-sec")
 
 

@@ -1,0 +1,20 @@
+about: A personal portfolio with work, a gallery and a contact form.
+theme: mono
+backend:
+  rate_limits: true
+  collections:
+    - {name: messages, fields: "name:text!, email:email!, message:textarea!", create: anyone, list: admin, view: admin}
+pages:
+  - path: /
+    title: Home
+    sections:
+      - nav
+      - {type: hero, align: left, buttons: [{label: See my work, href: /work}, {label: Get in touch, href: /contact}]}
+      - {type: stats, items: [{value: "10+", label: years}, {value: "60", label: projects}, {value: "12", label: awards}]}
+      - footer
+  - path: /work
+    title: Work
+    sections: [nav, {type: gallery, title: Selected work, images: [{src: "https://picsum.photos/seed/a/800/600", alt: Project one, caption: Project one}, {src: "https://picsum.photos/seed/b/800/600", alt: Project two, caption: Project two}, {src: "https://picsum.photos/seed/c/800/600", alt: Project three, caption: Project three}]}, footer]
+  - path: /contact
+    title: Contact
+    sections: [nav, {type: form, title: Say hello, collection: messages, fields: ["name:text!", "email:email!", "message:textarea!"], submit: Send}, footer]

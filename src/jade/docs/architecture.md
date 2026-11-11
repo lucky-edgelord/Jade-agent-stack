@@ -1,0 +1,38 @@
+---
+title: "Architecture"
+summary: "The five parts, who owns what, and the contract between Vault and Base."
+tags: [architecture, contract, ownership]
+applies_to: stack
+audience: both
+since: 0.1.0
+order: 70
+---
+# Architecture
+
+**Vault asks. Base answers. Base logs. Base can say no.**
+
+| Part | Owns | Does not |
+| --- | --- | --- |
+| Jade Vault | the agent loop, schedules, heartbeat, autonomy, budgets, approvals, the user-facing transcript | become a server for others |
+| Jade Agent Base | identity, the database, the model gateway, billing, the authoritative audit log | host an agent, schedule anything |
+| Jade Agent Kit | the embeddable subset of Vault: the agent in any web page | own data or identity |
+| Jade Agent UI/UX | web components and themes | talk to anything but Kit and Base |
+| Jade Agent Stack | a client over all four: SDK, CLI, wizard, harness, playbooks, sites, docs | copy their logic |
+
+The seam between Vault (or Kit) and Base is MCP (`/api/agent/mcp`), with the same tools over REST. Fleet (many
+terminals sharing one vault) is users, not distributed compute.
+
+## The contract, in short
+
+| Topic | Rule |
+| --- | --- |
+| Transcript | Vault owns what the person sees |
+| Audit | Base's `agent_audit` is authoritative, including refusals |
+| Credentials | one short-lived task credential per task, least privilege, at most 24 h; revocation fails closed |
+| Refusal | 403 `credential_refused` or a scope error: stop and tell the person; do not retry |
+| Idempotency | every mutation has a key; Base runs it once and replays the answer for 24 h |
+| Resume | a run's state says which tasks finished; running again skips them |
+| Phone sleeps mid-flow | the credential may expire; the run resumes with a new one and the same keys |
+| Approvals | Vault owns the model; the toolkit enforces its own copy locally (deny wins) |
+
+The full text is CONTRACT.md in the repository.

@@ -1,0 +1,41 @@
+---
+title: "Security"
+summary: "The threat model across Vault, Base, Kit, UI/UX and the toolkit, and what each defence covers."
+tags: [security, threat model, prompt injection]
+applies_to: stack
+audience: both
+since: 0.1.0
+order: 80
+---
+# Security
+
+## Defences in the toolkit
+
+| Defence | Where |
+| --- | --- |
+| Header-only auth; URLs with tokens are refused (client and `jade serve`) | `jade.http`, `jade.serve` |
+| A Vault that accepts `?token=` is refused (JADE102) | `jade init`, `jade doctor`, every Vault call |
+| Secrets in the OS keyring; never in config, output, logs or errors | `jade.secrets`, `jade.redact` |
+| Local approvals, deny wins, enforced before a call leaves | `jade.approvals` |
+| Destructive calls need a person (or a logged `--yolo`) | harness |
+| Playbook approvals bound to the file's hash | `jade playbook approve` |
+| Short-lived, least-privilege task credentials | Base 0.6 `/api/agent/credentials` |
+| Idempotency keys on every mutation | Base 0.6 |
+| A sandboxed expression language (no calls, imports or I/O) | `jade.playbook.template` |
+| Generated pages escape all text; markdown drops raw HTML and `javascript:` links | `jade.site` |
+
+## Threats
+
+| Threat | What can happen | What limits it |
+| --- | --- | --- |
+| A malicious note in Vault | instructions in a note steer the agent | Vault's approvals; Base scopes and task credentials bound what a steered agent can do; Base logs every call and refusal |
+| A malicious web page fetched by the agent | the same, from the web | the same; in Vault, its own fetch approvals; no URL tokens to leak |
+| A malicious MCP server | tool descriptions or results that steer the agent; data exfiltration | Vault approves MCP servers; in the toolkit, approvals per tool and target; credentials are per task and short |
+| A stolen Vault token used against Base | Vault's agent token is not a Base token; a Base token Vault holds can act within its scopes | task credentials expire in minutes; revoking the agent ends them all; `schema`, `hooks`, `settings` are root-equivalent: give them sparingly |
+| A compromised Base used against Vault | answers that steer Vault's agent; false data | treat Base results as data, not instructions; approvals still apply in Vault and the toolkit |
+| A leaked toolkit config | URLs and approval rules | no secrets in it by design |
+| A shared terminal log | a token in a URL or header | URL tokens refused; `--verbose` redacts Authorization and registered secrets |
+
+## Reporting
+
+Report vulnerabilities privately to the maintainer through GitHub security advisories on the repository concerned.

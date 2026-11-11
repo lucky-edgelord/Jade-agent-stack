@@ -1,0 +1,28 @@
+about: An analytics dashboard built from a surface spec (KPIs, charts, a sortable table), with sign-in.
+theme: slate
+pages:
+  - path: /
+    title: Dashboard
+    sections:
+      - nav
+      - type: surface
+        title: This month
+        spec:
+          root: root
+          data:
+            sales: [{month: Jan, revenue: 1200, costs: 800}, {month: Feb, revenue: 1540, costs: 890}, {month: Mar, revenue: 1880, costs: 980}, {month: Apr, revenue: 2370, costs: 1070}]
+            orders: [{id: 1001, customer: Ada, total: 120, status: paid}, {id: 1002, customer: Grace, total: 80, status: pending}, {id: 1003, customer: Linus, total: 45, status: refunded}]
+          components:
+            - {id: root, component: Column, children: [kpis, chart, tbl]}
+            - {id: kpis, component: Grid, props: {columns: 3}, children: [k1, k2, k3]}
+            - {id: k1, component: Card, children: [s1]}
+            - {id: s1, component: Stat, props: {label: Revenue, value: "$6,990", delta: "+18%", tone: ok, spark: [12, 15, 18, 23]}}
+            - {id: k2, component: Card, children: [s2]}
+            - {id: s2, component: Stat, props: {label: Orders, value: 312, delta: "+6%", tone: ok, spark: [70, 74, 80, 88]}}
+            - {id: k3, component: Card, children: [s3]}
+            - {id: s3, component: Stat, props: {label: Refunds, value: "1.2%", delta: "-0.3%", spark: [3, 2, 2, 1]}}
+            - {id: chart, component: Card, children: [c1]}
+            - {id: c1, component: Chart, props: {type: area, title: Revenue and costs, data: {$data: /sales}, x: month, format: currency}}
+            - {id: tbl, component: Card, props: {title: Latest orders}, children: [t1]}
+            - {id: t1, component: Table, props: {rows: {$data: /orders}, search: true, columns: [{key: id, label: "#"}, {key: customer, label: Customer}, {key: total, label: Total, format: currency}, {key: status, label: Status, format: badge, tones: {paid: ok, pending: warn, refunded: danger}}]}}
+      - footer

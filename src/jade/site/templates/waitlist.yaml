@@ -1,0 +1,15 @@
+about: A launch page with a waitlist form saved to the backend (anyone can join; only admins can read it).
+theme: ocean
+backend:
+  rate_limits: true
+  collections:
+    - {name: waitlist, fields: "email:email!, name:text, company:text", create: anyone, list: admin, view: admin}
+pages:
+  - path: /
+    title: Home
+    sections:
+      - nav
+      - {type: hero, eyebrow: "Early access", buttons: [{label: Join the waitlist, href: "#join"}]}
+      - {type: features, items: [{icon: "🧭", title: First in line, text: "Early members get in before anyone else."}, {icon: "🎁", title: Founding price, text: "Keep the launch price for life."}, {icon: "📣", title: Shape it, text: "Tell us what to build next."}]}
+      - {type: form, id: join, title: Join the waitlist, collection: waitlist, fields: ["email:email!", "name:text", "company:text"], submit: Join, success: "You're on the list. We'll email you."}
+      - footer
