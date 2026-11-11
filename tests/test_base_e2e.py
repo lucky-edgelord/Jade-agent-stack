@@ -11,7 +11,7 @@ import urllib.request
 from pathlib import Path
 
 import yaml
-from helpers import ROOT, isolate, jade
+from helpers import REAL_HOME, ROOT, isolate, jade
 
 SRC = Path(os.environ.get("JAB_DIR") or ROOT.parent / "jade-agent-base")
 
@@ -144,7 +144,8 @@ class BaseE2E(unittest.TestCase):
         self.assertEqual(code, 0, out + err)
         for t in ("Sencha", "Assam"):
             req("POST", self.url + "/api/agent/tools/record_create", {"collection": "leaves", "data": {"title": t, "description": "nice"}}, self.token)
-        p = subprocess.run(["node", str(ROOT / "tests/browser_site.mjs"), self.url], capture_output=True, text=True, timeout=120)
+        env = {**os.environ, "PLAYWRIGHT_BROWSERS_PATH": os.environ.get("PLAYWRIGHT_BROWSERS_PATH") or str(Path(REAL_HOME) / ".cache" / "ms-playwright")}
+        p = subprocess.run(["node", str(ROOT / "tests/browser_site.mjs"), self.url], capture_output=True, text=True, timeout=120, env=env)
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
         r = json.loads(p.stdout.strip().splitlines()[-1])
         self.assertTrue(r["form"] and r["native_validation"])
